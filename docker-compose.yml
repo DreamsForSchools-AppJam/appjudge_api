@@ -1,0 +1,31 @@
+version: '3.6'
+
+services:
+
+  appjudge:
+    container_name: appjudge
+    build:
+      context: ./services/appjudgeAPI
+      dockerfile: Dockerfile
+    volumes:
+      - './services/appjudgeAPI:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_ENV=developement
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@appjudge-db:5432/appjudge
+    depends_on:
+      - appjudge-db
+
+  appjudge-db:
+    container_name: appjudge-db
+    build:
+      context: ./services/appjudgeAPI/project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

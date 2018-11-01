@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yml run appjudge python manage.py recreate_db
+docker-compose -f docker-compose.yml run appjudge python manage.py recreate-db

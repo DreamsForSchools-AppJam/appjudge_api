@@ -1,1 +1,2 @@
-CREATE DATABASE judge;
+CREATE DATABASE appjudge;
+-- CREATE DATABASE judge;

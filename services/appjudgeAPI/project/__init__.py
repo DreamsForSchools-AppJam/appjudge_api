@@ -1,33 +1,31 @@
 # services/appjudgeAPI/project/__init__.py
 
 import os
-from flask import Flask, jsonify
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-# instantiate the app
-app = Flask(__name__)
-
-# set config
-app_settings = os.getenv('APP_SETTINGS')
-app.config.from_object(app_settings)
-
 # instantiate the db
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
-# model
-class Judge(db.Model): # new
-	__tablename__ = 'judge'
-	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	username = db.Column(db.String(128), nullable=False)
+def create_app(script_info=None):
 	
-	def __init__(self, username):
-		self.username = username
+	# instantiate the app
+	app = Flask(__name__)
 
+	# set config
+	app_settings = os.getenv('APP_SETTINGS')
+	app.config.from_object(app_settings)
 
-# route
-@app.route('/users/ping', methods=['GET'])
-def ping_pong():
-	return jsonify({
-	'status': 'success',
-	'message': 'pong!'
-	})
+	# set up extensions
+	db.init_app(app)
+
+	# register blueprints
+	from project.api.appjudge import appjudge_blueprint
+	app.register_blueprint(appjudge_blueprint)
+
+	# shell context for flask cli
+	@app.shell_context_processor
+	def ctx():
+		return {'app': app, 'db': db}
+	
+	return app

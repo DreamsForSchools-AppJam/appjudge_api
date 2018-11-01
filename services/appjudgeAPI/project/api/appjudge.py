@@ -1,11 +1,22 @@
 # services/appjudgeAPI/project/api/appjudge.py
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from project.api.models import Judge
 from project import db
 from sqlalchemy import exc
 
-appjudge_blueprint = Blueprint('judge', __name__)
+appjudge_blueprint = Blueprint('judge', __name__, template_folder='./templates')
+
+@appjudge_blueprint.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        username = request.form['username']
+        name = request.form['name']
+        db.session.add(Judge(username=username, name=name))
+        db.session.commit()
+    judges = Judge.query.all()
+    return render_template('index.html', judges=judges)
+
 @appjudge_blueprint.route('/appjudge/ping', methods=['GET'])
 def ping_pong():
     return jsonify({
@@ -25,11 +36,16 @@ def add_judge():
     if not post_data:
         return jsonify(response_object), 400
 
-    username = post_data.get('username')
     try:
+        username = post_data.get('username')
+        name = post_data.get('name')
+        job_title = post_data.get('job_title')
         judge = Judge.query.filter_by(username=username).first()
         if not judge:
-            db.session.add(Judge(username=username))
+            db.session.add(Judge(
+                username=username, 
+                name=name,
+                job_title=job_title))
             db.session.commit()
             response_object['status'] = 'success'
             response_object['message'] = f'{username} was added!'
@@ -55,10 +71,7 @@ def get_single_judege(judge_id):
         else:
             response_object = {
                 'status': 'success',
-                'data': {
-                    'id': judge.id,
-                    'username': judge.username
-                }
+                'data': judge.to_json()
             }
             return jsonify(response_object), 200
     except ValueError:
@@ -75,11 +88,3 @@ def get_all_judges():
         }
     }
     return jsonify(response_object), 200
-
-
-# returns the JSON for a Judge class
-def to_json(self):
-    return {
-        'id': self.id,
-        'username': self.username
-    }

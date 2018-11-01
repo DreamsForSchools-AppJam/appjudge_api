@@ -1,4 +1,4 @@
-# services/appjudgeAPI/project/api/models.py
+# services/appjudgeAPI/project/api/models/Judge.py
 
 from sqlalchemy.sql import func
 from project import db
@@ -23,3 +23,9 @@ class Judge(db.Model):
             'name': self.name,
             'job_title': self.job_title,
         }
+
+    # sets the basic info for the Judge
+    def set_info(self, name = "", username = "", job_title = "AppJam+ Judge"):
+        self.name = name
+        self.username = username
+        self.job_title = job_title

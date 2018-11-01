@@ -2,7 +2,8 @@
 
 from flask.cli import FlaskGroup
 from project import create_app, db
-from project.api.models import Judge
+from project.api.models.Judge import Judge
+from project.api.models.Team import Team
 
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
@@ -18,6 +19,8 @@ def seedDB():
     """Seeds the database."""
     db.session.add(Judge(username='af4ro', name="anshul", job_title="Software Developer"))
     db.session.add(Judge(username='vrustagi', name="vatsal", job_title="Software Developer"))
+    db.session.add(Team(name='Dry Grass', info="Summer 2016"))
+    db.session.add(Team(name='Hello Veggies', info="Summer 2017"))
     db.session.commit()
 
 if __name__ == '__main__':

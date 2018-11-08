@@ -4,13 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
 import Schedule from '@material-ui/icons/Schedule';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
-import HelpIcon from '@material-ui/icons/Help';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
-import ThumbDown from '@material-ui/icons/ThumbDown';
-import ThumbUp from '@material-ui/icons/ThumbUp';
 import Work from '@material-ui/icons/Work';
 import Typography from '@material-ui/core/Typography';
 import SimpleTableJudge from './SimpleTableJudge';
@@ -95,8 +91,6 @@ class ScrollableTabsButtonForce extends React.Component {
           <Tabs
             value={value}
             onChange={this.handleChange}
-            scrollable
-            scrollButtons="on"
             centered
             indicatorColor="primary"
             textColor="primary"

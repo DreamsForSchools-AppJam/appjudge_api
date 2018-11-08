@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import JudgesList from './components/JudgesList'
 import SearchAppBar from './components/SearchAppBar'
-import SimpleTable from './components/SimpleTable'
-import SimpleExpansionPanel from './components/SimpleExpansionPanel'
 import './App.css';
-import axios from 'axios';
 import ScrollableTabsButtton from './components/ScrollableTabsButtton';
 
 class App extends Component {
@@ -14,16 +10,6 @@ class App extends Component {
     this.state = {
       judges: []
     };
-  }
-
-  componentDidMount(){
-    this.getJudges();
-  };
-
-  getJudges(){
-    axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/judges`)
-    .then((res) => { this.setState({ judges: res.data.data.judges }); })
-    .catch((err) => { console.log(err); });
   }
 
   render() {
@@ -43,7 +29,6 @@ class App extends Component {
       <div>
         <SearchAppBar />
         <div>
-          {/* <JudgesList judges={this.state.judges}/> */}
           <ScrollableTabsButtton />
         </div> 
       </div>

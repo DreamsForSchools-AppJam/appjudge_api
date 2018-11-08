@@ -28,10 +28,12 @@ def create_app(script_info=None):
 	from project.api.routes.judge import judge_blueprint
 	from project.api.routes.team import team_blueprint
 	from project.api.routes.school import school_blueprint
+	from project.api.routes.event import event_blueprint
 	app.register_blueprint(appjudge_blueprint)
 	app.register_blueprint(judge_blueprint)
 	app.register_blueprint(team_blueprint)
 	app.register_blueprint(school_blueprint)
+	app.register_blueprint(event_blueprint)
 
 	# shell context for flask cli
 	@app.shell_context_processor

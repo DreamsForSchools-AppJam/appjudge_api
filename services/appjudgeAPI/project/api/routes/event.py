@@ -34,12 +34,18 @@ def add_event():
         # TODO: update information
         name = post_data.get('name')
         info = post_data.get('info')
+        start_time = post_data.get('start_time')
+        end_time = post_data.get('end_time')
+        date = post_data.get('date')
 
         event = Event.query.filter_by(name=name).first()
         if not event:
             db.session.add(Event(
                 name=name,
-                info=info))
+                info=info,
+                start_time=start_time,
+                end_time=end_time,
+                date=date))
             db.session.commit()
             response_object['status'] = 'success'
             response_object['message'] = f'{name} was added!'

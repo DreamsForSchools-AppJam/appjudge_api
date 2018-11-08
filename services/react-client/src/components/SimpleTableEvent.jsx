@@ -41,11 +41,11 @@ function SimpleTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell numeric>Calories</TableCell>
-            <TableCell numeric>Fat (g)</TableCell>
-            <TableCell numeric>Carbs (g)</TableCell>
-            <TableCell numeric>Protein (g)</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell numeric>Date</TableCell>
+            <TableCell numeric>Start Time</TableCell>
+            <TableCell numeric>End Time</TableCell>
+            <TableCell >Info</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,10 +55,10 @@ function SimpleTable(props) {
                 <TableCell component="th" scope="event">
                   {event.name}
                 </TableCell>
-                <TableCell numeric>{event.calories}</TableCell>
-                <TableCell numeric>{event.fat}</TableCell>
-                <TableCell numeric>{event.carbs}</TableCell>
-                <TableCell numeric>{event.protein}</TableCell>
+                <TableCell numeric>{event.date}</TableCell>
+                <TableCell numeric>{event.start_time}</TableCell>
+                <TableCell numeric>{event.end_time}</TableCell>
+                <TableCell >{event.info}</TableCell>
               </TableRow>
             );
           })}

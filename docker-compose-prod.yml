@@ -6,7 +6,7 @@ services:
     container_name: appjudge
     build:
       context: ./services/appjudgeAPI
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     volumes:
       - './services/appjudgeAPI:/usr/src/app'
     # ports:
@@ -30,12 +30,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    
+
   nginx:
-    container_name: appjudge-nginx
     build:
       context: ./services/nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     restart: always
     ports:
       - 80:80

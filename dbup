@@ -1,2 +1,4 @@
+export REACT_APP_USERS_SERVICE_URL=http://localhost
+
 docker-compose -f docker-compose.yml run appjudge python manage.py recreatedb
 docker-compose -f docker-compose.yml run appjudge python manage.py seeddb

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchAppBar from './components/SearchAppBar'
 import './App.css';
 import ScrollableTabsButtton from './components/ScrollableTabsButtton';
+import { Button } from '@material-ui/core';
 
 class App extends Component {
   
@@ -30,6 +31,7 @@ class App extends Component {
         <SearchAppBar />
         <div>
           <ScrollableTabsButtton />
+          <Button variant="flat" color="primary" onClick={this.render.bind(this)}>Refresh</Button>
         </div> 
       </div>
     );

@@ -81,6 +81,14 @@ class ScrollableTabsButtonForce extends React.Component {
         this.getEvents()
     }
 
+    update(){
+        this.getJudges()
+        this.getTeams()
+        this.getSchools()
+        this.getEvents()
+        this.render()
+    }
+
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -101,10 +109,10 @@ class ScrollableTabsButtonForce extends React.Component {
             <Tab label="Events" icon={<Schedule />} />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><SimpleTableJudge value={this.state.judges}/></TabContainer>}
-        {value === 1 && <TabContainer><SimpleTableTeam value={this.state.teams}/></TabContainer>}
-        {value === 2 && <TabContainer><SimpleTableSchool value={this.state.schools}/></TabContainer>}
-        {value === 3 && <TabContainer><SimpleTableEvent value={this.state.events}/></TabContainer>}
+        {value === 0 && <TabContainer><SimpleTableJudge update={this.update} value={this.state.judges}/></TabContainer>}
+        {value === 1 && <TabContainer><SimpleTableTeam update={this.update} value={this.state.teams}/></TabContainer>}
+        {value === 2 && <TabContainer><SimpleTableSchool update={this.update} value={this.state.schools}/></TabContainer>}
+        {value === 3 && <TabContainer><SimpleTableEvent update={this.update} value={this.state.events}/></TabContainer>}
       </div>
     );
   }

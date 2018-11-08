@@ -17,8 +17,7 @@ export default class FormDialog extends React.Component {
   state = {
     open: false,
     name: '',
-    username: '',
-    job_title: '',
+    info: '',
   };
 
   handleClickOpen = () => {
@@ -33,20 +32,16 @@ export default class FormDialog extends React.Component {
     this.setState({name:event.target.value});
   }
 
-  handleChangeUsername(event) {
-    this.setState({username:event.target.value});
+  handleChangeInfo(event) {
+    this.setState({info:event.target.value});
   }
 
-  handleChangeJob(event) {
-    this.setState({job_title:event.target.value});
-  }
 
-  getJudges = () => {
+  getTeams = () => {
     console.log(this.state)
-    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/judge`,{
+    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/team`,{
       name: this.state.name,
-      username: this.state.username,
-      job_title: this.state.job_title
+      info: this.state.info,
     })
     .catch((err) => { console.log(err); });
     this.handleClose()
@@ -56,28 +51,18 @@ export default class FormDialog extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="extendedFab" color="primary" onClick={this.handleClickOpen}>Add Judge</Button>
+        <Button variant="extendedFab" color="primary" onClick={this.handleClickOpen}>Add team</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add Judge</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add team</DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We will send
               updates occasionally.
             </DialogContentText> */}
-            <TextField
-              autoFocus
-              margin="dense"
-              id="username"
-              label="Username"
-              fullWidth
-              required
-              value={this.state.username}
-              onChange={this.handleChangeUsername.bind(this)}
-            />
             <TextField
               autoFocus
               margin="dense"
@@ -90,18 +75,18 @@ export default class FormDialog extends React.Component {
             <TextField
               autoFocus
               margin="dense"
-              id="job_title"
-              label="Job Title"
+              id="info"
+              label="Info"
               fullWidth
-              value={this.state.job_title}
-              onChange={this.handleChangeJob.bind(this)}
+              value={this.state.info}
+              onChange={this.handleChangeInfo.bind(this)}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.getJudges} color="primary">
+            <Button onClick={this.getTeams} color="primary">
               Add
             </Button>
           </DialogActions>

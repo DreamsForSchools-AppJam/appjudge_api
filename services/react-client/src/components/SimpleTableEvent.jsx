@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import FormDialog from './Events/FormDialog';
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,11 @@ function SimpleTable(props) {
   const { classes } = props;
 
   return (
+    <div>
+    <div>
+      <FormDialog update={props.update}/>
+    </div>
+    <div>
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
@@ -65,6 +71,8 @@ function SimpleTable(props) {
         </TableBody>
       </Table>
     </Paper>
+    </div>
+    </div>
   );
 }
 

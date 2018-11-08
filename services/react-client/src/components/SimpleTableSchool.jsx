@@ -41,24 +41,20 @@ function SimpleTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell numeric>Calories</TableCell>
-            <TableCell numeric>Fat (g)</TableCell>
-            <TableCell numeric>Carbs (g)</TableCell>
-            <TableCell numeric>Protein (g)</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell numeric>Id</TableCell>
+            <TableCell>Info</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => {
+          {props.value.map(school => {
             return (
-              <TableRow key={row.id}>
+              <TableRow key={school.id}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {school.name}
                 </TableCell>
-                <TableCell numeric>{row.calories}</TableCell>
-                <TableCell numeric>{row.fat}</TableCell>
-                <TableCell numeric>{row.carbs}</TableCell>
-                <TableCell numeric>{row.protein}</TableCell>
+                <TableCell numeric>{school.id}</TableCell>
+                <TableCell >{school.info}</TableCell>
               </TableRow>
             );
           })}

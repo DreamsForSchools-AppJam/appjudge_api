@@ -92,29 +92,29 @@ function teamTable(teams){
 function SimpleTable(props) {
   const { classes } = props;
   var result;
+    if (props.key === "judge"){
+      return (
+        <Paper className={classes.root}>
+          {judgeTable(props.value)}
+        </Paper>
+      );
+      // result = judgeTable(props.value);
+    }
+    else if (props.key === "team"){
+      return (
+        <Paper className={classes.root}>
+          {teamTable(props.value)}
+        </Paper>
+      );
+      // result = teamTable(props.value);
+    }
+    // else {return(<Paper></Paper>)}
 
-  if (props.key === "judge"){
-    return (
-      <Paper className={classes.root}>
-        {judgeTable(props.value)}
-      </Paper>
-    );
-    // result = judgeTable(props.value);
-  }
-  else if (props.key === "team"){
-    return (
-      <Paper className={classes.root}>
-        {teamTable(props.value)}
-      </Paper>
-    );
-    // result = teamTable(props.value);
-  }
-
-  // return (
-  //   <Paper className={classes.root}>
-  //     {result}
-  //   </Paper>
-  // );
+    // return (
+    //   <Paper className={classes.root}>
+    //     {result}
+    //   </Paper>
+    // );
 }
 
 SimpleTable.propTypes = {

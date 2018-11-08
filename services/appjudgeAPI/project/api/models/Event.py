@@ -26,6 +26,9 @@ class Event(db.Model):
             'id': self.id,
             'name': self.name,
             'info': self.info,
+            'date': self.date 
+            'start_time': self.start_time 
+            'end_time': self.end_time 
         }
 
     # sets the basic info for the Judge

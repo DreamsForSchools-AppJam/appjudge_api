@@ -2,6 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 from project.api.models.Judge import Judge
+from project.api.models.Event import Event
 from project import db
 from sqlalchemy import exc
 
@@ -35,17 +36,34 @@ def add_judge():
         username = post_data.get('username')
         name = post_data.get('name')
         job_title = post_data.get('job_title')
+        event_id = post_data.get('event_id')
         
         judge = Judge.query.filter_by(username=username).first()
         if not judge:
-            db.session.add(Judge(
-                username=username, 
-                name=name,
-                job_title=job_title))
-            db.session.commit()
-            response_object['status'] = 'success'
-            response_object['message'] = f'{username} was added!'
-            return jsonify(response_object), 201
+            event = Event.query.get(event_id)
+            if event:
+                # Add new Judge
+                db.session.add(Judge(
+                    username=username, 
+                    name=name,
+                    job_title=job_title,
+                    event_id=event_id))
+                db.session.commit()
+
+                # Add new Judge's id to Event
+                judge = Judge.query.filter_by(username=username).first()
+                event.add_judge(judge.id)
+                db.session.commit()
+
+                response_object['status'] = 'success'
+                response_object['message'] = f'{username} was added!'
+                
+                # TODO: remove additional responses
+                response_object['judge_list'] = event.to_json()
+                return jsonify(response_object), 201
+            else:
+                response_object['message'] = 'Sorry. Event {} does not exist.'.format(event_id)
+                return jsonify(response_object), 400
         else:
             response_object['message'] = 'Sorry. That username already exists.'
             return jsonify(response_object), 400

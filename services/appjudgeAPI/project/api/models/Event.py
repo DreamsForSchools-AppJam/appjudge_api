@@ -12,16 +12,18 @@ class Event(db.Model):
     end_time = db.Column("end_time", db.DateTime, nullable=True)
     info = db.Column("info", db.String(1280), nullable=True)
     judge_list = db.Column("judge_list", db.ARRAY(db.Integer), nullable=False)
+    school_list = db.Column("school_list", db.ARRAY(db.Integer), nullable=False)
     
     # TODO: Check and update defaults
     def __init__(self, name="", date=None, start_time=None, end_time=None,
-         info="", judge_list=[]):
+         info="", judge_list=[], school_list=[]):
         self.name = name
         self.date = date
         self.start_time = start_time
         self.end_time = end_time
         self.info = info
         self.judge_list = judge_list
+        self.school_list = school_list
 
     # returns the JSON for a Judge class
     def to_json(self):
@@ -33,6 +35,7 @@ class Event(db.Model):
             'start_time': self.start_time,
             'end_time': self.end_time,
             'judge_list': self.judge_list, 
+            'school_list': self.school_list
         }
 
     # sets the basic info for the Judge
@@ -42,3 +45,6 @@ class Event(db.Model):
 
     def add_judge(self, judge_id):
         self.judge_list = self.judge_list + [judge_id]
+    
+    def add_school(self, school_id):
+        self.school_list = self.school_list + [school_id]

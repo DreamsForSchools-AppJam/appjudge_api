@@ -9,11 +9,14 @@ class Judge(db.Model):
     username = db.Column(db.String(128), nullable=False)
     name = db.Column(db.String(128), nullable=False)
     job_title = db.Column(db.String(128), nullable=False)
+    event_id = db.Column(db.Integer, nullable=False)
     
-    def __init__(self, username, name="", job_title=""):
+    # TODO: Remove event_id default value
+    def __init__(self, username, event_id=0, name="", job_title=""):
         self.username = username
         self.name = name
         self.job_title = job_title
+        self.event_id = event_id
 
     # returns the JSON for a Judge class
     def to_json(self):
@@ -22,6 +25,7 @@ class Judge(db.Model):
             'username': self.username,
             'name': self.name,
             'job_title': self.job_title,
+            'event_id': self.event_id,
         }
 
     # sets the basic info for the Judge

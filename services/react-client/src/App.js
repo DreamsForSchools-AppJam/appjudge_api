@@ -11,6 +11,11 @@ class App extends Component {
     this.state = {
       judges: []
     };
+    this.update = this.update.bind(this)
+  }
+
+  update = () => {
+    this.forceUpdate()
   }
 
   render() {
@@ -31,7 +36,7 @@ class App extends Component {
         <SearchAppBar />
         <div>
           <ScrollableTabsButtton />
-          <Button variant="flat" color="primary" onClick={this.render.bind(this)}>Refresh</Button>
+          <Button variant="flat" color="primary" onClick={this.update}>Refresh</Button>
         </div> 
       </div>
     );

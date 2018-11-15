@@ -23,7 +23,7 @@ def seedDB():
     db.session.add(Judge(username='vrustagi', name="vatsal", job_title="Software Developer"))
     db.session.add(Team(name='Dry Grass', info="Summer 2016"))
     db.session.add(Team(name='Hello Veggies', info="Summer 2017"))
-    db.session.add(Event(name='Showcase at Garden Grove', info="With 5 judges"))
+    db.session.add(Event(name='Showcase at Garden Grove', info="With 5 judges", judge_list=[1,2]))
     db.session.add(Event(name='Showcase at Newport High School', info="With 3 Schools"))
     db.session.add(School(name='Newport High School', info="Newport Beach, CA"))
     db.session.add(School(name='Garden Grove High School', info="Garden Grive, CA"))

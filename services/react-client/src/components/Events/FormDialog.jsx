@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 
@@ -41,12 +41,17 @@ export default class FormDialog extends React.Component {
     this.setState({date:event.target.value});
   }
 
-  getTeamss = () => {
+  handleChangeJudgelist(event) {
+    this.setState({judge_list:event.target.value});
+  }
+
+  getTeams = () => {
     console.log(this.state)
     axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/event`,{
       name: this.state.name,
       info: this.state.info,
-      date: this.state.date
+      date: this.state.date,
+      judge_list: this.state.judge_list,
     })
     .catch((err) => { console.log(err); });
     this.handleClose()
@@ -96,12 +101,21 @@ export default class FormDialog extends React.Component {
               value={this.state.date}
               onChange={this.handleChangeJob.bind(this)}
             />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="judge_list"
+              label="Judge List"
+              fullWidth
+              value={this.state.judge_list}
+              onChange={this.handleChangeJudgelist.bind(this)}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.getTeamss} color="primary">
+            <Button onClick={this.getTeams} color="primary">
               Add
             </Button>
           </DialogActions>

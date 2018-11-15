@@ -1,1 +1,6 @@
-Judges:
+- Integrate Schools and Team
+- Integrate Team and Student
+- Integrate Team and Mentor
+
+- Add Questions
+- Figure out how to score

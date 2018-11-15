@@ -5,11 +5,11 @@ from project import db
 
 class Judge(db.Model):
     __tablename__ = 'judge'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(128), nullable=False)
-    name = db.Column(db.String(128), nullable=False)
-    job_title = db.Column(db.String(128), nullable=True)
-    event_id = db.Column(db.Integer, nullable=False)
+    id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column("username", db.String(128), nullable=False)
+    name = db.Column("name", db.String(128), nullable=False)
+    job_title = db.Column("job_title", db.String(128), nullable=True)
+    event_id = db.Column("event_id", db.Integer, nullable=False)
     
     # TODO: Remove event_id default value
     def __init__(self, username, event_id, name="", job_title=""):

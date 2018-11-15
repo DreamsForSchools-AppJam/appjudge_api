@@ -2,6 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 from project.api.models.Team import Team
+from project.api.models.School import School
 from project import db
 from sqlalchemy import exc
 
@@ -34,18 +35,35 @@ def add_team():
         # TODO: update information
         name = post_data.get('name')
         info = post_data.get('info')
+        school_id = post_data.get('school_id')
 
-        team = Team.query.filter_by(name=name).first()
+        team = Team.query.filter_by(name=name, school_id=school_id).first()
         if not team:
-            db.session.add(Team(
-                name=name,
-                info=info))
-            db.session.commit()
-            response_object['status'] = 'success'
-            response_object['message'] = f'{name} was added!'
-            return jsonify(response_object), 201
+            school = School.query.get(school_id)
+            if school:
+                # Add new Team
+                db.session.add(Team(
+                    name=name,
+                    info=info,
+                    school_id=school_id))
+                db.session.commit()
+
+                # Add new Team's id to School
+                team = Team.query.filter_by(name=name, school_id=school_id).first()
+                school.add_team(team.id)
+                db.session.commit()
+
+                response_object['status'] = 'success'
+                response_object['message'] = f'{name} was added!'
+
+                # TODO: remove additional responses
+                response_object['school_list'] = school.to_json()
+                return jsonify(response_object), 201
+            else:
+                response_object['message'] = 'Sorry. school {} does not exist.'.format(school_id)
+                return jsonify(response_object), 400
         else:
-            response_object['message'] = 'Sorry. That name already exists.'
+            response_object['message'] = 'Sorry. That School already exists.'
             return jsonify(response_object), 400
     except exc.IntegrityError as e:
         db.session.rollback()

@@ -9,10 +9,10 @@ import PersonPinIcon from '@material-ui/icons/PersonPin';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import Work from '@material-ui/icons/Work';
 import Typography from '@material-ui/core/Typography';
-import SimpleTableJudge from './SimpleTableJudge';
-import SimpleTableTeam from './SimpleTableTeam';
-import SimpleTableSchool from './SimpleTableSchool';
-import SimpleTableEvent from './SimpleTableEvent';
+import SimpleTableJudge from './Judges/SimpleTableJudge';
+import SimpleTableTeam from './Teams/SimpleTableTeam';
+import SimpleTableSchool from './Schools/SimpleTableSchool';
+import SimpleTableEvent from './Events/SimpleTableEvent';
 import axios from 'axios';
 
 

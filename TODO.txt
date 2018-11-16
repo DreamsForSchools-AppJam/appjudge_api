@@ -1,4 +1,3 @@
-- Integrate Schools and Team
 - Integrate Team and Student
 - Integrate Team and Mentor
 

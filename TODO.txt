@@ -1,5 +1,6 @@
-- Integrate Team and Student
-- Integrate Team and Mentor
-
-- Add Questions
+- Add Scores
+- Add Questions 
 - Figure out how to score
+
+Scores:
+- Check the score default value of -1

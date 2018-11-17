@@ -31,11 +31,15 @@ def create_app(script_info=None):
 	from project.api.routes.event import event_blueprint
 	from project.api.routes.student import student_blueprint
 	from project.api.routes.mentor import mentor_blueprint
+	from project.api.routes.score import score_blueprint
+	from project.api.routes.question import question_blueprint
 	app.register_blueprint(appjudge_blueprint)
 	app.register_blueprint(judge_blueprint)
 	app.register_blueprint(team_blueprint)
 	app.register_blueprint(school_blueprint)
 	app.register_blueprint(event_blueprint)
+	app.register_blueprint(question_blueprint)
+	app.register_blueprint(score_blueprint)
 	app.register_blueprint(mentor_blueprint)
 	app.register_blueprint(student_blueprint)
 

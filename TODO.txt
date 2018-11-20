@@ -1,6 +1,4 @@
-- Add Scores
-- Add Questions 
-- Figure out how to score
+- Add front end for creating an event
 
 Scores:
 - Check the score default value of -1

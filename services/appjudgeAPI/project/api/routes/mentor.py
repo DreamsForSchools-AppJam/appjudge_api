@@ -39,7 +39,7 @@ def add_mentor():
 
         mentor = Mentor.query.filter_by(name=name, team_id=team_id).first()
         if not mentor:
-            team = Team.query.get(team_id)
+            team = Team.query.filter_by(id=team_id).first()
             if team:
                 # Add new Mentor
                 db.session.add(Mentor(

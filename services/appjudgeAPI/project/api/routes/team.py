@@ -39,7 +39,7 @@ def add_team():
 
         team = Team.query.filter_by(name=name, school_id=school_id).first()
         if not team:
-            school = School.query.get(school_id)
+            school = School.query.filter_by(id=school_id).first()
             if school:
                 # Add new Team
                 db.session.add(Team(

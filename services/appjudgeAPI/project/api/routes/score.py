@@ -1,26 +1,26 @@
-# services/appjudgeAPI/project/api/routes/mentor.py
+# services/appjudgeAPI/project/api/routes/score.py
 
 from flask import Blueprint, jsonify, request
-from project.api.models.Mentor import Mentor
+from project.api.models.Score import Score
 from project.api.models.Team import Team
 from project import db
 from sqlalchemy import exc
 
-mentor_blueprint = Blueprint('mentor', __name__)
+score_blueprint = Blueprint('score', __name__)
 
-@mentor_blueprint.route('/mentors', methods=['GET'])
-def get_all_mentors():
-    """Get all mentors"""
+@score_blueprint.route('/scores', methods=['GET'])
+def get_all_scores():
+    """Get all scores"""
     response_object = {
         'status': 'success',
         'data': {
-            'mentors': [mentor.to_json() for mentor in Mentor.query.all()]
+            'scores': [score.to_json() for score in Score.query.all()]
         }
     }
     return jsonify(response_object), 200
 
-@mentor_blueprint.route('/mentor', methods=['POST'])
-def add_mentor():
+@score_blueprint.route('/score', methods=['POST'])
+def add_score():
     post_data = request.get_json()
 
     # Check for invalid payload
@@ -33,57 +33,49 @@ def add_mentor():
 
     try:
         # TODO: update information
-        name = post_data.get('name')
-        info = post_data.get('info')
+        event_id = post_data.get('event_id')
         team_id = post_data.get('team_id')
+        judge_id = post_data.get('judge_id')
+        question_id = post_data.get('question_id')
+        score = post_data.get('score')
 
-        mentor = Mentor.query.filter_by(name=name, team_id=team_id).first()
-        if not mentor:
-            team = Team.query.get(team_id)
-            if team:
-                # Add new Mentor
-                db.session.add(Mentor(
-                    name=name,
-                    info=info,
-                    team_id=team_id))
-                db.session.commit()
+        score = Score.query.filter_by(event_id=event_id, team_id=team_id,
+         judge_id=judge_id, question_id=question_id).first()
 
-                # Add new Mentor's id to Team
-                mentor = Mentor.query.filter_by(name=name, team_id=team_id).first()
-                team.add_mentor(mentor.id)
-                db.session.commit()
+        # Add new Score
+        db.session.add(Score(
+            event_id=event_id,
+            team_id=team_id,
+            judge_id=judge_id,
+            question_id=question_id,
+            score=score))
+        db.session.commit()
 
-                response_object['status'] = 'success'
-                response_object['message'] = f'{name} was added!'
+        response_object['status'] = 'success'
+        response_object['message'] = f'{name} was added!'
 
-                # TODO: remove additional responses
-                response_object['team_list'] = team.to_json()
-                return jsonify(response_object), 201
-            else:
-                response_object['message'] = 'Sorry. team {} does not exist.'.format(team_id)
-                return jsonify(response_object), 400
-        else:
-            response_object['message'] = 'Sorry. That Team already exists.'
-            return jsonify(response_object), 400
+        return jsonify(response_object), 201
+
     except exc.IntegrityError as e:
         db.session.rollback()
         return jsonify(response_object), 400
 
-@mentor_blueprint.route('/mentor/<mentor_id>', methods=['GET'])
-def get_single_mentor(mentor_id):
-    """Get single Mentor details"""
+@score_blueprint.route('/score/<event_id>/<team_id>/<judge_id>/<question_id>', methods=['GET'])
+def get_single_score(event_id, team_id, judge_id, question_id):
+    """Get single Score details"""
     response_object = {
         'status': 'fail',
-        'message': 'Mentor does not exist'
+        'message': 'Score does not exist'
     }
     try:
-        mentor = mentor.query.filter_by(id=int(mentor_id)).first()
-        if not mentor:
+        score = score.query.filter_by(event_id=int(event_id), team_id=int(team_id),
+         judge_id=int(judge_id), question_id=int(question_id)).first()
+        if not score:
             return jsonify(response_object), 404
         else:
             response_object = {
                 'status': 'success',
-                'data': mentor.to_json()
+                'data': score.to_json()
             }
             return jsonify(response_object), 200
     except ValueError:

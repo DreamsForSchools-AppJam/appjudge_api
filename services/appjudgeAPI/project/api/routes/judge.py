@@ -40,7 +40,7 @@ def add_judge():
         
         judge = Judge.query.filter_by(username=username).first()
         if not judge:
-            event = Event.query.get(event_id)
+            event = Event.query.filter_by(id=event_id).first()
             if event:
                 # Add new Judge
                 db.session.add(Judge(

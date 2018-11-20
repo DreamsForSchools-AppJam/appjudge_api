@@ -6,7 +6,7 @@ from project.api.models.Event import Event
 from project import db
 from sqlalchemy import exc
 
-question_blueprint = Blueprint('question', __question__)
+question_blueprint = Blueprint('question', __name__)
 
 @question_blueprint.route('/questions', methods=['GET'])
 def get_all_questions():
@@ -59,7 +59,7 @@ def add_question():
 
         question = Question.query.filter_by(question=question, event_id=event_id).first()
         if not question:
-            team = Team.query.get(event_id)
+            team = Team.query.filter_by(id=event_id).first()
             if team:
                 # Add new Question
                 db.session.add(Question(

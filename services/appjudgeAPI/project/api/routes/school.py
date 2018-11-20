@@ -39,7 +39,7 @@ def add_school():
 
         school = School.query.filter_by(name=name, event_id=event_id).first()
         if not school:
-            event = Event.query.get(event_id)
+            event = Event.query.filter_by(id=event_id).first()
             if event:
                 # Add new School
                 db.session.add(School(

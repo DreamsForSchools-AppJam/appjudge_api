@@ -1,7 +1,7 @@
 docker-compose -f docker-compose.yml run appjudge python manage.py recreatedb
 docker-compose -f docker-compose.yml run appjudge python manage.py seeddb
 
-cd services/react-client/
+cd services/react-client-admin/
 export REACT_APP_USERS_SERVICE_URL=http://localhost
 cd ..
 cd ..

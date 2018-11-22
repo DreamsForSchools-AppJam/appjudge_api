@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import SearchAppBar from './components/SearchAppBar'
+// import SearchAppBar from './components/AppBars/SearchAppBar'
 import './App.css';
-import ScrollableTabsButtton from './components/ScrollableTabsButtton';
-import { Button } from '@material-ui/core';
+import JudgeHome from './components/JudgeHome';
+// import ScrollableTabsButtton from './components/ScrollableTabsButtton';
+// import { Button } from '@material-ui/core';
 
 class App extends Component {
   
@@ -20,24 +21,18 @@ class App extends Component {
 
   render() {
     return (
-      // <section className="section">
-      //   <div className="container">
-      //     <div className="columns">
-      //       <div className="column is-one-third">
-      //         <br/>
-      //           <h1 className="title is-1">All Judges</h1>
-      //         <hr/><br/>
-      //         <JudgesList judges={this.state.judges}/>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </section>
-      <div>
-        <SearchAppBar />
+      <div id="root">
+        {/* <SearchAppBar /> */}
+        <div id="routes">
+          {this.props.children}
+        </div>
         <div>
+          <JudgeHome team_list={[1,2]}/>
+        </div>
+        {/* <div>
           <ScrollableTabsButtton />
           <Button variant="flat" color="primary" onClick={this.update}>Refresh</Button>
-        </div> 
+        </div>  */}
       </div>
     );
   }

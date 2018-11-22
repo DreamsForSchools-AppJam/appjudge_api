@@ -9,8 +9,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './services/appjudgeAPI:/usr/src/app'
-    # ports:
-    #   - 5001:5000
+    ports:
+      - 5001:5000
     expose:
       - '5000'
     environment:
@@ -39,5 +39,25 @@ services:
     restart: always
     ports:
       - 80:80
+    depends_on:
+      - appjudge
+      - react-client-admin
+
+
+  react-client-admin:
+    container_name: react-client-admin
+    build:
+      context: ./services/react-client-admin
+      dockerfile: Dockerfile
+    volumes:
+      - './services/react-client-admin:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - 3007:3000
+    expose:
+      - '3000'
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_APPJUDGE_SERVICE_URL=${REACT_APP_APPJUDGE_SERVICE_URL}
     depends_on:
       - appjudge

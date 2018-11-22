@@ -51,25 +51,25 @@ class ScrollableTabsButtonForce extends React.Component {
 
 // User defined
     getJudges(){
-        axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/judges`)
+        axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judges`)
         .then((res) => { this.setState({ judges: res.data.data.judges }); })
         .catch((err) => { console.log(err); });
     }
 
     getTeams(){
-        axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/teams`)
+        axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/teams`)
         .then((res) => { this.setState({ teams: res.data.data.teams }); })
         .catch((err) => { console.log(err); });
     }
 
     getSchools(){
-        axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/schools`)
+        axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/schools`)
         .then((res) => { this.setState({ schools: res.data.data.schools }); })
         .catch((err) => { console.log(err); });
     }
 
     getEvents(){
-        axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/events`)
+        axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/events`)
         .then((res) => { this.setState({ events: res.data.data.events }); })
         .catch((err) => { console.log(err); });
     }

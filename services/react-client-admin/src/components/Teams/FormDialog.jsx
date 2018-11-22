@@ -18,6 +18,7 @@ export default class FormDialog extends React.Component {
     open: false,
     name: '',
     info: '',
+    school_id: ''
   };
 
   handleClickOpen = () => {
@@ -36,12 +37,16 @@ export default class FormDialog extends React.Component {
     this.setState({info:event.target.value});
   }
 
+  handleChangeSchoolId(event) {
+    this.setState({school_id:event.target.value});
+  }
 
   getTeams = () => {
     console.log(this.state)
-    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/team`,{
+    axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/team`,{
       name: this.state.name,
       info: this.state.info,
+      school_id: this.state.school_id,
     })
     .catch((err) => { console.log(err); });
     this.handleClose()
@@ -80,6 +85,16 @@ export default class FormDialog extends React.Component {
               fullWidth
               value={this.state.info}
               onChange={this.handleChangeInfo.bind(this)}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="school_id"
+              label="School ID"
+              fullWidth
+              required
+              value={this.state.school_id}
+              onChange={this.handleChangeSchoolId.bind(this)}
             />
           </DialogContent>
           <DialogActions>

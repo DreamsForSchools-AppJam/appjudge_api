@@ -47,7 +47,7 @@ export default class FormDialog extends React.Component {
 
   getTeams = () => {
     console.log(this.state)
-    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/event`,{
+    axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event`,{
       name: this.state.name,
       info: this.state.info,
       date: this.state.date,

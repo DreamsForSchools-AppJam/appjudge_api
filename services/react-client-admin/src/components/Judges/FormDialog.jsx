@@ -19,6 +19,7 @@ export default class FormDialog extends React.Component {
     name: '',
     username: '',
     job_title: '',
+    event_id: '',
   };
 
   handleClickOpen = () => {
@@ -41,12 +42,17 @@ export default class FormDialog extends React.Component {
     this.setState({job_title:event.target.value});
   }
 
+  handleChangeEventId(event) {
+    this.setState({event_id:event.target.value});
+  }
+
   getJudges = () => {
     console.log(this.state)
-    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/judge`,{
+    axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judge`,{
       name: this.state.name,
       username: this.state.username,
-      job_title: this.state.job_title
+      job_title: this.state.job_title,
+      event_id: this.state.event_id
     })
     .catch((err) => { console.log(err); });
     this.handleClose()
@@ -95,6 +101,16 @@ export default class FormDialog extends React.Component {
               fullWidth
               value={this.state.job_title}
               onChange={this.handleChangeJob.bind(this)}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="event_id"
+              label="Event ID"
+              fullWidth
+              required
+              value={this.state.event_id}
+              onChange={this.handleChangeEventId.bind(this)}
             />
           </DialogContent>
           <DialogActions>

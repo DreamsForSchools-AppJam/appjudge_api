@@ -1,4 +1,13 @@
+- Check promise linking in JudgeHome
+
+- Add scoring
+- add routes
+- add login
+- Check why judge got added with same username
+- Add Judge side of React client
+- Dockerize judge react client
 - Add front end for creating an event
+- add routes for react
 
 Scores:
 - Check the score default value of -1

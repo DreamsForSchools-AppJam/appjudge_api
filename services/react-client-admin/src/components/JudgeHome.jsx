@@ -30,6 +30,7 @@ class JudgeHome extends Component {
 		.then((school) => {
             team['event_id'] = school.event_id;
             team['school_name'] = school.name;
+            team['judge_id'] = this.judge_id;
         })
 		.then(() => {
             team['questions'] = [];

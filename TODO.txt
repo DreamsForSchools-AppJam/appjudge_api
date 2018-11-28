@@ -1,3 +1,4 @@
+- change question from list to dict
 - Add team info for judge side
 - Add scoring
 - add routes

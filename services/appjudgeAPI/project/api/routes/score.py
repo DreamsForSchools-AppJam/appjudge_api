@@ -71,7 +71,17 @@ def get_single_score(event_id, team_id, judge_id, question_id):
         score = score.query.filter_by(event_id=int(event_id), team_id=int(team_id),
          judge_id=int(judge_id), question_id=int(question_id)).first()
         if not score:
-            return jsonify(response_object), 404
+            response_object = {
+                'status': 'success',
+                'data': {
+                    'event_id': event_id,
+                    'judge_id': judge_id,
+                    'team_id': team_id,
+                    'question_id': question_id,
+                    'score': 0,
+                }
+            }
+            return jsonify(response_object), 200
         else:
             response_object = {
                 'status': 'success',

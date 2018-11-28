@@ -97,7 +97,7 @@ def get_single_question(question_id):
         'message': 'Question does not exist'
     }
     try:
-        question = question.query.filter_by(id=int(question_id)).first()
+        question = Question.query.filter_by(id=int(question_id)).first()
         if not question:
             return jsonify(response_object), 404
         else:

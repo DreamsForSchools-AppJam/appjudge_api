@@ -12,7 +12,6 @@ class Question(db.Model):
     
     def __init__(self, max_score, question, event_id):
         self.question = question
-        self.info = info
         self.max_score = max_score
         self.event_id = event_id
 

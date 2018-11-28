@@ -37,7 +37,7 @@ const styles = theme => ({
 function TeamCardHolder(props) {
   const { classes } = props;
   var teams = props.value
-  console.log(teams)
+//   console.log(teams)
 
   return (
     <div className={classes.holder}>

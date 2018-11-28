@@ -74,7 +74,6 @@ export default class FormDialog extends React.Component {
               updates occasionally.
             </DialogContentText> */}
             <TextField
-              autoFocus
               margin="dense"
               id="info"
               label="info"
@@ -84,7 +83,6 @@ export default class FormDialog extends React.Component {
               onChange={this.handleChangeinfo.bind(this)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="name"
               label="Name"
@@ -93,7 +91,6 @@ export default class FormDialog extends React.Component {
               onChange={this.handleChangeName.bind(this)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="date"
               label="Date"
@@ -102,7 +99,6 @@ export default class FormDialog extends React.Component {
               onChange={this.handleChangeJob.bind(this)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="judge_list"
               label="Judge List"

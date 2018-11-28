@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
+import FormDialog from '../Score/QuestionForm'
 
 
 const styles = theme => ({
@@ -50,8 +51,9 @@ function TeamCardHolder(props) {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell>School Name</TableCell>
-                        <TableCell numeric>Total Score</TableCell>
-                        <TableCell numeric>Max Score</TableCell>
+                        <TableCell>Information</TableCell>
+                        {/* <TableCell numeric>Total Score</TableCell>
+                        <TableCell numeric>Max Score</TableCell> */}
                         <TableCell>Score Button</TableCell>
                     </TableRow>
                 </TableHead>
@@ -63,10 +65,12 @@ function TeamCardHolder(props) {
                             {team.name}
                             </TableCell>
                             <TableCell>{team.school_name}</TableCell>
-                            <TableCell numeric>{team.score}</TableCell>
-                            <TableCell numeric>{team.max_score}</TableCell>
+                            <TableCell>{team.info}</TableCell>
+                            {/* <TableCell numeric>{team.score}</TableCell>
+                            <TableCell numeric>{team.max_score}</TableCell> */}
                             <TableCell>
-                                <Button  size="small" variant="contained" color="primary">Score</Button>
+                                {/* <Button  size="small" variant="contained" color="primary">Score</Button> */}
+                                <FormDialog team={team}/>
                             </TableCell>
                         </TableRow>
                         );

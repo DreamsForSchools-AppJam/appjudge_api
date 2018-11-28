@@ -1,5 +1,4 @@
-- Check promise linking in JudgeHome
-
+- Add team info for judge side
 - Add scoring
 - add routes
 - add login

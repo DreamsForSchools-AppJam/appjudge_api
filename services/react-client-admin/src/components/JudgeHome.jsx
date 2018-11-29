@@ -33,19 +33,22 @@ class JudgeHome extends Component {
             team['judge_id'] = this.judge_id;
         })
 		.then(() => {
-            team['questions'] = [];
+            team['questions'] = {};
             // team['questions'].push(Promise.resolve(this.getQuestions(team['question_list'])));
             return this.getQuestions(team['question_list'])
         })
         .then((questions) => {
             // console.log("Result", questions);
-            team['questions'] = team['questions'].concat(questions)
+            for(var i=0; i<questions.length; i++){
+                team['questions'][questions[i].id] = questions[i]
+            }
+            // team['questions'] = team['questions'].concat(questions)
         })
 		// .then((que = this.getQuestions(team['question_list'])) => {console.log(que.then())})
         .then(() => {
             // console.log("Questions", team['questions'])
             this.setState({teams: this.state.teams.concat(team)})
-            console.log(team)
+            // console.log(team)
         })
 	}
 
@@ -63,9 +66,8 @@ class JudgeHome extends Component {
     }
 
 	getQuestions(questions){
-		var i;
 		var proms = [];
-			for(i=0; i<questions.length; i++){
+			for(var i=0; i<questions.length; i++){
 				proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/question/${questions[i]}`))
 				.then((res) => { 
                     // console.log("Question", res.data.data)

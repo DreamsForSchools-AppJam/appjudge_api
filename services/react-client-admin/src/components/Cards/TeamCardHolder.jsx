@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 // import { Button } from '@material-ui/core';
-import FormDialog from '../Score/QuestionForm'
+import QuestionForm from '../Score/QuestionForm'
 
 
 const styles = theme => ({
@@ -70,7 +70,7 @@ function TeamCardHolder(props) {
                             <TableCell numeric>{team.max_score}</TableCell> */}
                             <TableCell>
                                 {/* <Button  size="small" variant="contained" color="primary">Score</Button> */}
-                                <FormDialog team={team}/>
+                                <QuestionForm team={team}/>
                             </TableCell>
                         </TableRow>
                         );

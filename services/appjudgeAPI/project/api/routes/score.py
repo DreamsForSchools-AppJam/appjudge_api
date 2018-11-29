@@ -37,22 +37,25 @@ def add_score():
         team_id = post_data.get('team_id')
         judge_id = post_data.get('judge_id')
         question_id = post_data.get('question_id')
-        score = post_data.get('score')
+        scoreval = post_data.get('score')
 
         score = Score.query.filter_by(event_id=event_id, team_id=team_id,
          judge_id=judge_id, question_id=question_id).first()
 
-        # Add new Score
-        db.session.add(Score(
-            event_id=event_id,
-            team_id=team_id,
-            judge_id=judge_id,
-            question_id=question_id,
-            score=score))
+        if not score:
+            # Add new Score
+            db.session.add(Score(
+                event_id=event_id,
+                team_id=team_id,
+                judge_id=judge_id,
+                question_id=question_id,
+                score=scoreval))
+        else:
+            score.set_score(scoreval)
         db.session.commit()
 
         response_object['status'] = 'success'
-        response_object['message'] = f'{name} was added!'
+        response_object['message'] = 'Score was added!'
 
         return jsonify(response_object), 201
 
@@ -68,7 +71,7 @@ def get_single_score(event_id, team_id, judge_id, question_id):
         'message': 'Score does not exist'
     }
     try:
-        score = score.query.filter_by(event_id=int(event_id), team_id=int(team_id),
+        score = Score.query.filter_by(event_id=int(event_id), team_id=int(team_id),
          judge_id=int(judge_id), question_id=int(question_id)).first()
         if not score:
             response_object = {

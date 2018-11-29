@@ -8,14 +8,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ScoringTable from "./ScoringTable"
 import axios from 'axios';
+import CustomizedSnackbars from '../Extras/Snackbar'
 
-export default class FormDialog extends React.Component {
+export default class QuestionForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             open: false,
             team: this.props.team,
-            questions: this.props.team.questions
+            mainQuestions: this.props.team.questions
         };
     }
 
@@ -25,18 +26,68 @@ export default class FormDialog extends React.Component {
 
     handleClose = () => {
         this.setState({ open: false });
+
+        console.log("Outside", this.state.mainQuestions)
     };
 
-    getScores(event_id, team_id, judge_id){
-        // console.log(this.state)
-        for(var i = 0; i < this.state.questions.length; i++){
-            axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/score/${event_id}/${team_id}/${judge_id}/${this.state.questions.length[i].id}`)
-            .then((res) => {this.state.questions[i]['score'] = res.data.data.score})
+    checkLimit(){
+        var flag = false
+        for (var key in this.state.mainQuestions){
+            if(this.state.mainQuestions[key].score > this.state.mainQuestions[key].max_score){
+                flag = true
+                break
+            }
+        }
+        if (flag) {
+            return "error"
+        }
+        else{
+            this.sendScores(this.state.team.event_id, this.state.team.id, this.state.team.judge_id)
+            return "success"
         }
     }
 
+    setScores(event_id, team_id, judge_id){
+        // console.log(this.state)
+        var proms = [];
+        for (var key in this.state.mainQuestions){
+            proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/score/${event_id}/${team_id}/${judge_id}/${key}`)
+            .then((res) => {return res.data.data})))
+        }
+        // for(var i = 0; i < this.state.questions.length; i++){
+        //     proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/score/${event_id}/${team_id}/${judge_id}/${this.state.questions[i].id}`)
+        //     .then((res) => {return res.data.data})))
+        // }
+        Promise.all(proms)
+        .then((scores) => {
+            var questions = this.state.mainQuestions
+            for(var i = 0; i < scores.length; i++){
+                questions[scores[i].question_id]['score'] = scores[i].score;
+            }
+            this.setState({ questions: questions })
+        })
+    }
+
+    sendScores(event_id, team_id, judge_id){
+        // console.log(this.state)
+        var proms = [];
+        for (var key in this.state.mainQuestions){
+            console.log("Score", this.state.mainQuestions[key].score)
+            proms.push(Promise.resolve(axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/score`,
+            {
+                judge_id: judge_id,
+                event_id: event_id,
+                team_id: team_id,
+                question_id: key,
+                score: this.state.mainQuestions[key].score
+            })
+            .then((res) => {return res.data.data})))
+        }
+        Promise.all(proms)
+    }
+    
     componentDidMount(){
-        this.getScores(this.state.team.event_id, this.state.team.id, this.state.team.judge_id)
+        this.setScores(this.state.team.event_id, this.state.team.id, this.state.team.judge_id)
     }
 
     render() {
@@ -47,30 +98,24 @@ export default class FormDialog extends React.Component {
             open={this.state.open}
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
+            fullWidth
             >
             <DialogTitle id="form-dialog-title">Score Team: {this.state.team.name}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                 Please make sure you check your score and make sure it is less than the max before submitting it
                 </DialogContentText>
-                {/* <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Email Address"
-                type="email"
-                fullWidth
-                /> */}
-                <ScoringTable questions={this.state.questions} judge_id={this.state.team.judge_id} 
-                event_id={this.state.team.event_id} team_id={this.state.team.id}/>
+
+                <ScoringTable mainQuestions={this.state.mainQuestions}/>
+
             </DialogContent>
             <DialogActions>
                 <Button onClick={this.handleClose} color="primary">
                 Cancel
                 </Button>
-                <Button onClick={this.handleClose} color="primary">
-                Subscribe
-                </Button>
+                <CustomizedSnackbars onClick={this.handleClose} checkLimit={this.checkLimit.bind(this)} color="primary"/>
+                {/* Submit
+                </CustomizedSnackbars> */}
             </DialogActions>
             </Dialog>
         </div>

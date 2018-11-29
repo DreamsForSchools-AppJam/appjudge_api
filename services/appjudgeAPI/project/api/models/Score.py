@@ -12,7 +12,7 @@ class Score(db.Model):
     score = db.Column("score", db.Integer, nullable=True)
     
     # TODO check the default score
-    def __init__(self, event_id, judge_id, team_id, question_id, score=-1):
+    def __init__(self, event_id, judge_id, team_id, question_id, score=0):
         self.event_id = event_id
         self.judge_id = judge_id
         self.team_id = team_id
@@ -30,4 +30,4 @@ class Score(db.Model):
         }
 
     def set_score(self, score):
-        self.score = self.score
+        self.score = score

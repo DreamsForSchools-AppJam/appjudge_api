@@ -4,22 +4,19 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 
 export default class FormDialog extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.handleChange = this.handleChange.bind(this);
-  // }
-
-  state = {
-    open: false,
-    name: '',
-    info: '',
-    school_id: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      name: '',
+      info: '',
+      school_id: ''
+    };
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -29,17 +26,11 @@ export default class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  handleChangeName(event) {
-    this.setState({name:event.target.value});
-  }
-
-  handleChangeInfo(event) {
-    this.setState({info:event.target.value});
-  }
-
-  handleChangeSchoolId(event) {
-    this.setState({school_id:event.target.value});
-  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
 
   getTeams = () => {
     console.log(this.state)
@@ -48,9 +39,9 @@ export default class FormDialog extends React.Component {
       info: this.state.info,
       school_id: this.state.school_id,
     })
+    .then(() => {this.props.update()})
+    .then(() => {this.handleClose()})
     .catch((err) => { console.log(err); });
-    this.handleClose()
-    // this.props.update()
 }
 
   render() {
@@ -73,9 +64,10 @@ export default class FormDialog extends React.Component {
               margin="dense"
               id="name"
               label="Name"
+              required
               fullWidth
               value={this.state.name}
-              onChange={this.handleChangeName.bind(this)}
+              onChange={this.handleChange('name')}
             />
             <TextField
               autoFocus
@@ -84,7 +76,7 @@ export default class FormDialog extends React.Component {
               label="Info"
               fullWidth
               value={this.state.info}
-              onChange={this.handleChangeInfo.bind(this)}
+              onChange={this.handleChange('info')}
             />
             <TextField
               autoFocus
@@ -94,7 +86,7 @@ export default class FormDialog extends React.Component {
               fullWidth
               required
               value={this.state.school_id}
-              onChange={this.handleChangeSchoolId.bind(this)}
+              onChange={this.handleChange('school_id')}
             />
           </DialogContent>
           <DialogActions>

@@ -9,9 +9,9 @@ class Team(db.Model):
     name = db.Column("name", db.String(128), nullable=False)
     info = db.Column("info", db.String(1280), nullable=True)
     school_id = db.Column("school_id", db.Integer, nullable=False)
-    student_list = db.Column("student_list", db.ARRAY(db.Integer), nullable=False)
-    mentor_list = db.Column("mentor_list", db.ARRAY(db.Integer), nullable=False)
-    question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=False)
+    student_list = db.Column("student_list", db.ARRAY(db.Integer), nullable=True)
+    mentor_list = db.Column("mentor_list", db.ARRAY(db.Integer), nullable=True)
+    question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=True)
     
     def __init__(self, name, school_id, student_list=[], mentor_list=[], question_list=[], info=""):
         self.name = name

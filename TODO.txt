@@ -1,7 +1,5 @@
-- Get list of teams instead of dummy data for JudgeHome
 - Add team info for judge side
-- add routes
-- add login
+- add login for admin
 - Check why judge got added with same username
 - Add front end for creating an event
 - add routes for react

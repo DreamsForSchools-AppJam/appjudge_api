@@ -36,9 +36,9 @@ def add_team():
         name = post_data.get('name')
         info = post_data.get('info')
         school_id = post_data.get('school_id')
-        question_list = post_data.get('question_list')
-        student_list = post_data.get('student_list')
-        mentor_list = post_data.get('mentor_list')
+        # question_list = post_data.get('question_list')
+        # student_list = post_data.get('student_list')
+        # mentor_list = post_data.get('mentor_list')
 
         team = Team.query.filter_by(name=name, school_id=school_id).first()
         if not team:
@@ -48,10 +48,7 @@ def add_team():
                 db.session.add(Team(
                     name=name,
                     info=info,
-                    school_id=school_id,
-                    question_list=question_list, 
-                    student_list=student_list, 
-                    mentor_list=mentor_list))
+                    school_id=school_id))
                 db.session.commit()
 
                 # Add new Team's id to School

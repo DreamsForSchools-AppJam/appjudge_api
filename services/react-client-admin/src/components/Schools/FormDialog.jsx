@@ -8,17 +8,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 
 export default class FormDialog extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.handleChange = this.handleChange.bind(this);
-  // }
-
-  state = {
-    open: false,
-    name: '',
-    info: '',
-    event_id: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      name: '',
+      info: '',
+      event_id: ''
+    };
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -28,17 +26,11 @@ export default class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  handleChangeName(event) {
-    this.setState({name:event.target.value});
-  }
-
-  handleChangeInfo(event) {
-    this.setState({info:event.target.value});
-  }
-
-  handleChangeEventId(event) {
-    this.setState({event_id:event.target.value});
-  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
 
   getSchools = () => {
     console.log(this.state)
@@ -47,9 +39,9 @@ export default class FormDialog extends React.Component {
       info: this.state.info,
       event_id: this.state.event_id,
     })
+    .then(() => {this.props.update()})
+    .then(() => {this.handleClose()})
     .catch((err) => { console.log(err); });
-    this.handleClose()
-    // this.props.update()
 }
 
   render() {
@@ -72,8 +64,9 @@ export default class FormDialog extends React.Component {
               id="name"
               label="Name"
               fullWidth
+              required
               value={this.state.name}
-              onChange={this.handleChangeName.bind(this)}
+              onChange={this.handleChange('name')}
             />
             <TextField
               margin="dense"
@@ -81,7 +74,7 @@ export default class FormDialog extends React.Component {
               label="Info"
               fullWidth
               value={this.state.info}
-              onChange={this.handleChangeInfo.bind(this)}
+              onChange={this.handleChange('info')}
             />
             <TextField
               margin="dense"
@@ -90,7 +83,7 @@ export default class FormDialog extends React.Component {
               fullWidth
               required
               value={this.state.event_id}
-              onChange={this.handleChangeEventId.bind(this)}
+              onChange={this.handleChange('event_id')}
             />
           </DialogContent>
           <DialogActions>

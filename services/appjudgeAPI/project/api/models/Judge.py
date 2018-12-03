@@ -11,8 +11,8 @@ class Judge(db.Model):
     name = db.Column("name", db.String(128), nullable=False)
     job_title = db.Column("job_title", db.String(128), nullable=True)
     event_id = db.Column("event_id", db.Integer, nullable=False)
-    team_list = db.Column("team_list", db.ARRAY(db.Integer), nullable=False)
-    question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=False)
+    team_list = db.Column("team_list", db.ARRAY(db.Integer), nullable=True)
+    question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=True)
     
     # TODO: Remove event_id default value
     def __init__(self, username, event_id, name, password, job_title="", team_list=[], question_list=[]):

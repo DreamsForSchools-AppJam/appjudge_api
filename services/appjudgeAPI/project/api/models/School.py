@@ -9,9 +9,9 @@ class School(db.Model):
     name = db.Column("name", db.String(128), nullable=False)
     info = db.Column("info", db.String(1280), nullable=True)
     event_id = db.Column("event_id", db.Integer, nullable=False)
-    team_list = db.Column("team_list", db.ARRAY(db.Integer), nullable=False)
+    team_list = db.Column("team_list", db.ARRAY(db.Integer), nullable=True)
     
-    def __init__(self, event_id, team_list=[], name="School", info=""):
+    def __init__(self, event_id, name, team_list=[], info=""):
         self.name = name
         self.info = info
         self.event_id = event_id

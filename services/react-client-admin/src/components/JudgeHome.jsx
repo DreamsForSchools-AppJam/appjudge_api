@@ -95,37 +95,6 @@ class JudgeHome extends Component {
 	}
 
     render() {
-        // var team = [
-        //     {
-        //         name:"some",
-        //         school_name:"another",
-        //         max_score:10,
-        //         score:5
-        //     },
-        //     {
-        //         name:"agfaf",
-        //         school_name:"anotagdfadfher",
-        //         max_score:10,
-        //         score:5
-        //     },
-        //     {
-        //         name:"agfaf",
-        //         school_name:"anotagdfadfher",
-        //         max_score:10,
-        //         score:5
-        //     },
-        //     {
-        //         name:"agfaf",
-        //         school_name:"anotagdfadfher",
-        //         max_score:10,
-        //         score:5
-        //     },
-        //     {
-        //         name:"agfaf",
-        //         school_name:"anotagdfadfher",
-        //         max_score:10,
-        //         score:5
-        //     }]
 
         return (
             <div>

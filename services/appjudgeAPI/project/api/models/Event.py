@@ -10,18 +10,18 @@ class Event(db.Model):
     date = db.Column("date", db.Date, nullable=True)
     start_time = db.Column("start_time", db.DateTime, nullable=True)
     end_time = db.Column("end_time", db.DateTime, nullable=True)
-    info = db.Column("info", db.String(1280), nullable=True)
-    judge_list = db.Column("judge_list", db.ARRAY(db.Integer), nullable=False)
-    school_list = db.Column("school_list", db.ARRAY(db.Integer), nullable=False)
+    location = db.Column("location", db.String(1280), nullable=True)
+    judge_list = db.Column("judge_list", db.ARRAY(db.Integer), nullable=True)
+    school_list = db.Column("school_list", db.ARRAY(db.Integer), nullable=True)
     
     # TODO: Check and update defaults
-    def __init__(self, name="", date=None, start_time=None, end_time=None,
-         info="", judge_list=[], school_list=[]):
+    def __init__(self, name, date=None, start_time=None, end_time=None,
+         location="", judge_list=[], school_list=[]):
         self.name = name
         self.date = date
         self.start_time = start_time
         self.end_time = end_time
-        self.info = info
+        self.location = location
         self.judge_list = judge_list
         self.school_list = school_list
 
@@ -30,7 +30,7 @@ class Event(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'info': self.info,
+            'location': self.location,
             'date': self.date, 
             'start_time': self.start_time,
             'end_time': self.end_time,
@@ -38,10 +38,10 @@ class Event(db.Model):
             'school_list': self.school_list
         }
 
-    # sets the basic info for the Judge
-    def set_info(self, name = "", username = "", info = "AppJam+ Event"):
+    # sets the basic location for the Judge
+    def set_location(self, name = "", username = "", location = "AppJam+ Event"):
         self.name = name
-        self.info = info
+        self.location = location
 
     def add_judge(self, judge_id):
         self.judge_list = self.judge_list + [judge_id]

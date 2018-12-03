@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SearchAppBar from './components/AppBars/SearchAppBar'
 import './App.css';
 import JudgeLogin from './components/Login/JudgeLogin';
+import { Redirect } from 'react-router-dom'
+
 
 class App extends Component {
   
@@ -24,7 +26,8 @@ class App extends Component {
         <main>
           {this.props.children}
         </main>
-        <JudgeLogin></JudgeLogin>
+        {/* <JudgeLogin></JudgeLogin> */}
+        <Redirect to='/home'/>
         {/* <div>
           <JudgeHome team_list={[1,2,3]}/>
         </div> */}

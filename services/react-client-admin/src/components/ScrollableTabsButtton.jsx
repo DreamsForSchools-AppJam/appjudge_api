@@ -82,6 +82,7 @@ class ScrollableTabsButtonForce extends React.Component {
     }
 
     update(){
+        console.log("Update Called")
         this.getJudges()
         this.getTeams()
         this.getSchools()
@@ -103,16 +104,16 @@ class ScrollableTabsButtonForce extends React.Component {
             indicatorColor="primary"
             textColor="primary"
           >
-            <Tab label="Judges" icon={<PersonPinIcon />} />
-            <Tab label="Teams" icon={<ShoppingBasket />} />
-            <Tab label="Schools" icon={<Work />} />
             <Tab label="Events" icon={<Schedule />} />
+            <Tab label="Schools" icon={<Work />} />
+            <Tab label="Teams" icon={<ShoppingBasket />} />
+            <Tab label="Judges" icon={<PersonPinIcon />} />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><SimpleTableJudge update={this.update} value={this.state.judges}/></TabContainer>}
-        {value === 1 && <TabContainer><SimpleTableTeam update={this.update} value={this.state.teams}/></TabContainer>}
-        {value === 2 && <TabContainer><SimpleTableSchool update={this.update} value={this.state.schools}/></TabContainer>}
-        {value === 3 && <TabContainer><SimpleTableEvent update={this.update} value={this.state.events}/></TabContainer>}
+        {value === 0 && <TabContainer><SimpleTableEvent update={this.update.bind(this)} value={this.state.events}/></TabContainer>}
+        {value === 1 && <TabContainer><SimpleTableSchool update={this.update.bind(this)} value={this.state.schools}/></TabContainer>}
+        {value === 2 && <TabContainer><SimpleTableTeam update={this.update.bind(this)} value={this.state.teams}/></TabContainer>}
+        {value === 3 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges}/></TabContainer>}
       </div>
     );
   }

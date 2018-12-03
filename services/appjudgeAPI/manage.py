@@ -32,8 +32,8 @@ def seedDB():
     db.session.add(Team(name='Hello Veggies', info="Summer 2017", school_id=2, student_list=[2], mentor_list=[2], question_list=[1, 2, 6]))
     db.session.add(Team(name='Teammers', info="Summer 2017", school_id=2, student_list=[2], mentor_list=[2], question_list=[1, 2]))
 
-    db.session.add(Event(name='Showcase at Garden Grove', info="With 5 judges", judge_list=[1], school_list=[1]))
-    db.session.add(Event(name='Showcase at Newport High School', info="With 3 Schools", judge_list=[2], school_list=[2]))
+    db.session.add(Event(name='Showcase at Garden Grove', location="Garden Grove", judge_list=[1], school_list=[1]))
+    db.session.add(Event(name='Showcase at Newport High School', location="Newport Beach", judge_list=[2], school_list=[2]))
 
     db.session.add(School(name='Newport High School', info="Newport Beach, CA", event_id=1, team_list=[1]))
     db.session.add(School(name='Garden Grove High School', info="Garden Grive, CA", event_id=2, team_list=[2]))

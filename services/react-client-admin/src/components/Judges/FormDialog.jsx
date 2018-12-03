@@ -9,18 +9,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 
 export default class FormDialog extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.handleChange = this.handleChange.bind(this);
-  // }
-
-  state = {
-    open: false,
-    name: '',
-    username: '',
-    job_title: '',
-    event_id: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      name: '',
+      username: '',
+      job_title: '',
+      event_id: '',
+      password: ''
+    };
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -30,21 +29,11 @@ export default class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  handleChangeName(event) {
-    this.setState({name:event.target.value});
-  }
-
-  handleChangeUsername(event) {
-    this.setState({username:event.target.value});
-  }
-
-  handleChangeJob(event) {
-    this.setState({job_title:event.target.value});
-  }
-
-  handleChangeEventId(event) {
-    this.setState({event_id:event.target.value});
-  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
 
   getJudges = () => {
     console.log(this.state)
@@ -52,11 +41,12 @@ export default class FormDialog extends React.Component {
       name: this.state.name,
       username: this.state.username,
       job_title: this.state.job_title,
-      event_id: this.state.event_id
+      event_id: this.state.event_id,
+      password: this.state.password
     })
+    .then(() => {this.props.update()})
+    .then(() => {this.handleClose()})
     .catch((err) => { console.log(err); });
-    this.handleClose()
-    // this.props.update()
 }
 
   render() {
@@ -76,20 +66,12 @@ export default class FormDialog extends React.Component {
             </DialogContentText> */}
             <TextField
               margin="dense"
-              id="username"
-              label="Username"
-              fullWidth
-              required
-              value={this.state.username}
-              onChange={this.handleChangeUsername.bind(this)}
-            />
-            <TextField
-              margin="dense"
               id="name"
               label="Name"
+              required
               fullWidth
               value={this.state.name}
-              onChange={this.handleChangeName.bind(this)}
+              onChange={this.handleChange('name')}
             />
             <TextField
               margin="dense"
@@ -97,7 +79,7 @@ export default class FormDialog extends React.Component {
               label="Job Title"
               fullWidth
               value={this.state.job_title}
-              onChange={this.handleChangeJob.bind(this)}
+              onChange={this.handleChange('job_title')}
             />
             <TextField
               margin="dense"
@@ -106,7 +88,25 @@ export default class FormDialog extends React.Component {
               fullWidth
               required
               value={this.state.event_id}
-              onChange={this.handleChangeEventId.bind(this)}
+              onChange={this.handleChange('event_id')}
+            />
+            <TextField
+              margin="dense"
+              id="username"
+              label="Username"
+              fullWidth
+              required
+              value={this.state.username}
+              onChange={this.handleChange('username')}
+            />
+            <TextField
+              margin="dense"
+              id="password"
+              label="Password"
+              fullWidth
+              required
+              value={this.state.password}
+              onChange={this.handleChange('password')}
             />
           </DialogContent>
           <DialogActions>

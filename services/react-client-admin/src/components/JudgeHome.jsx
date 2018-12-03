@@ -11,12 +11,16 @@ class JudgeHome extends Component {
             teams: []
         };
         // Set the judge_id on login
-        this.judge_id = 1
+        this.judge = this.props.location.state.judge
+        console.log("Inside JudgeHome", this.props)
+        // this.judge_id = this.judge.id
+        // this.team_list = this.judge.team_list
         this.update = this.update.bind(this)
     }
 
     componentDidMount(){
-        this.setTeams(this.props.team_list)
+        // this.setTeams(this.props.team_list)
+        this.setTeams(this.judge.team_list)
     }
 
     update = () => {
@@ -30,7 +34,7 @@ class JudgeHome extends Component {
 		.then((school) => {
             team['event_id'] = school.event_id;
             team['school_name'] = school.name;
-            team['judge_id'] = this.judge_id;
+            team['judge_id'] = this.judge.id;
         })
 		.then(() => {
             team['questions'] = {};

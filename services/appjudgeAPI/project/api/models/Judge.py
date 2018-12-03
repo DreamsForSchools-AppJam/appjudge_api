@@ -7,6 +7,7 @@ class Judge(db.Model):
     __tablename__ = 'judge'
     id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
     username = db.Column("username", db.String(128), nullable=False)
+    password = db.Column("password", db.String(128), nullable=False)
     name = db.Column("name", db.String(128), nullable=False)
     job_title = db.Column("job_title", db.String(128), nullable=True)
     event_id = db.Column("event_id", db.Integer, nullable=False)
@@ -14,9 +15,10 @@ class Judge(db.Model):
     question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=False)
     
     # TODO: Remove event_id default value
-    def __init__(self, username, event_id, name="", job_title="", team_list=[], question_list=[]):
+    def __init__(self, username, event_id, name, password, job_title="", team_list=[], question_list=[]):
         self.username = username
         self.name = name
+        self.password = password
         self.job_title = job_title
         self.event_id = event_id
         self.team_list = team_list
@@ -27,6 +29,7 @@ class Judge(db.Model):
         return {
             'id': self.id,
             'username': self.username,
+            'password': self.password,
             'name': self.name,
             'job_title': self.job_title,
             'event_id': self.event_id,

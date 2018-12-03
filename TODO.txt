@@ -1,11 +1,8 @@
-- change question from list to dict
+- Get list of teams instead of dummy data for JudgeHome
 - Add team info for judge side
-- Add scoring
 - add routes
 - add login
 - Check why judge got added with same username
-- Add Judge side of React client
-- Dockerize judge react client
 - Add front end for creating an event
 - add routes for react
 

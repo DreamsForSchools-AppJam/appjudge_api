@@ -23,11 +23,14 @@ def recreateDB():
 def seedDB():
     """Seeds the database."""
     # TODO: Check contraints
-    db.session.add(Judge(username='af4ro', name="anshul", job_title="Software Developer", event_id=1))
-    db.session.add(Judge(username='vrustagi', name="vatsal", job_title="Software Developer", event_id=2))
+    db.session.add(Judge(username='af4ro', name="anshul", job_title="Software Developer", password="some",
+     event_id=1, team_list=[1, 2, 3], question_list=[]))
+    db.session.add(Judge(username='vrustagi', name="vatsal", job_title="Software Developer", password="some",
+    event_id=2, team_list=[3], question_list=[]))
 
-    db.session.add(Team(name='Dry Grass', info="Summer 2016", school_id=1, student_list=[1], mentor_list=[1], question_list=[1, 2]))
-    db.session.add(Team(name='Hello Veggies', info="Summer 2017", school_id=2, student_list=[2], mentor_list=[2], question_list=[1, 2]))
+    db.session.add(Team(name='Dry Grass', info="Summer 2016", school_id=1, student_list=[1], mentor_list=[1], question_list=[1, 2, 5, 6]))
+    db.session.add(Team(name='Hello Veggies', info="Summer 2017", school_id=2, student_list=[2], mentor_list=[2], question_list=[1, 2, 6]))
+    db.session.add(Team(name='Teammers', info="Summer 2017", school_id=2, student_list=[2], mentor_list=[2], question_list=[1, 2]))
 
     db.session.add(Event(name='Showcase at Garden Grove', info="With 5 judges", judge_list=[1], school_list=[1]))
     db.session.add(Event(name='Showcase at Newport High School', info="With 3 Schools", judge_list=[2], school_list=[2]))
@@ -45,6 +48,8 @@ def seedDB():
     db.session.add(Question(question='Why?', max_score=10, event_id=1))
     db.session.add(Question(question='How?', max_score=10, event_id=2))
     db.session.add(Question(question='Why?', max_score=10, event_id=2))
+    db.session.add(Question(question='How is it?', max_score=5, event_id=1))
+    db.session.add(Question(question='Why is it?', max_score=20, event_id=1))
     
     db.session.commit()
 

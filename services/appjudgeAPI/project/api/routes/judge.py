@@ -37,6 +37,9 @@ def add_judge():
         name = post_data.get('name')
         job_title = post_data.get('job_title')
         event_id = post_data.get('event_id')
+        question_list = post_data.get('question_list')
+        team_list = post_data.get('team_list')
+        password = post_data.get('password')
         
         judge = Judge.query.filter_by(username=username).first()
         if not judge:
@@ -47,7 +50,10 @@ def add_judge():
                     username=username, 
                     name=name,
                     job_title=job_title,
-                    event_id=event_id))
+                    event_id=event_id,
+                    team_list=team_list,
+                    question_list=question_list,
+                    password=password))
                 db.session.commit()
 
                 # Add new Judge's id to Event
@@ -80,6 +86,26 @@ def get_single_judge(judge_id):
     }
     try:
         judge = Judge.query.filter_by(id=int(judge_id)).first()
+        if not judge:
+            return jsonify(response_object), 404
+        else:
+            response_object = {
+                'status': 'success',
+                'data': judge.to_json()
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404
+
+@judge_blueprint.route('/judge/<username>/<password>', methods=['GET'])
+def get_single_judge_by_username(username, password):
+    """Get single Judge details by username password"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Judge does not exist'
+    }
+    try:
+        judge = Judge.query.filter_by(username=username, password=password).first()
         if not judge:
             return jsonify(response_object), 404
         else:

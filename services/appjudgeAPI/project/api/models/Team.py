@@ -13,7 +13,7 @@ class Team(db.Model):
     mentor_list = db.Column("mentor_list", db.ARRAY(db.Integer), nullable=False)
     question_list = db.Column("question_list", db.ARRAY(db.Integer), nullable=False)
     
-    def __init__(self, school_id, student_list=[], mentor_list=[], question_list=[], name="Team", info=""):
+    def __init__(self, name, school_id, student_list=[], mentor_list=[], question_list=[], info=""):
         self.name = name
         self.info = info
         self.school_id = school_id
@@ -32,11 +32,6 @@ class Team(db.Model):
             'mentor_list': self.mentor_list,
             'question_list': self.question_list,
         }
-
-    # sets the basic info for the Judge
-    def set_info(self, name = "", username = "", info = "AppJam+ Team"):
-        self.name = name
-        self.info = info
     
     def add_student(self, student_id):
         self.student_list = self.student_list + [student_id]

@@ -63,7 +63,7 @@ def add_mentor():
                 response_object['message'] = 'Sorry. team {} does not exist.'.format(team_id)
                 return jsonify(response_object), 400
         else:
-            response_object['message'] = 'Sorry. That Team already exists.'
+            response_object['message'] = 'Sorry. That Mentor already exists.'
             return jsonify(response_object), 400
     except exc.IntegrityError as e:
         db.session.rollback()
@@ -84,6 +84,33 @@ def get_single_mentor(mentor_id):
             response_object = {
                 'status': 'success',
                 'data': mentor.to_json()
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404
+
+@mentor_blueprint.route('/mentor/remove/<mentor_id>', methods=['GET'])
+def remove_mentor(mentor_id):
+    """Remove single Mentor details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Mentor does not exist'
+    }
+    try:
+        mentor = Mentor.query.filter_by(id=int(mentor_id)).first()
+        if not mentor:
+            return jsonify(response_object), 404
+        else:
+            team = Team.query.filter_by(id=mentor.team_id).first()
+            if team:
+                temp = team.mentor_list
+                temp.remove(mentor.id)
+                team.mentor_list = temp
+            db.session.delete(mentor)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "Mentor removed"
             }
             return jsonify(response_object), 200
     except ValueError:

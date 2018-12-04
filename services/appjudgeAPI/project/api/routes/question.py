@@ -3,6 +3,8 @@
 from flask import Blueprint, jsonify, request
 from project.api.models.Question import Question
 from project.api.models.Event import Event
+from project.api.models.School import School
+from project.api.models.Team import Team
 from project import db
 from sqlalchemy import exc
 
@@ -59,8 +61,8 @@ def add_question():
 
         question = Question.query.filter_by(question=question, event_id=event_id).first()
         if not question:
-            team = Team.query.filter_by(id=event_id).first()
-            if team:
+            event = Event.query.filter_by(id=event_id).first()
+            if event:
                 # Add new Question
                 db.session.add(Question(
                     question=question,
@@ -68,9 +70,12 @@ def add_question():
                     event_id=event_id))
                 db.session.commit()
 
-                # Add new Question's id to Team
+                # Add new Question's id to Teams
                 question = Question.query.filter_by(question=question, event_id=event_id).first()
-                team.add_question(question.id)
+                for sid in event.school_list:
+                    for t in School.query.filter_by(id=sid).first().team_list:
+                        team = Team.query.filter_by(id=t).first()
+                        team.add_question(question.id)
                 db.session.commit()
 
                 response_object['status'] = 'success'
@@ -104,6 +109,33 @@ def get_single_question(question_id):
             response_object = {
                 'status': 'success',
                 'data': question.to_json()
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404
+
+@question_blueprint.route('/question/remove/<question_id>', methods=['GET'])
+def remove_question(question_id):
+    """Remove single Question details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Question does not exist'
+    }
+    try:
+        question = Question.query.filter_by(id=int(question_id)).first()
+        if not question:
+            return jsonify(response_object), 404
+        else:
+            event = Event.query.filter_by(id=question.event_id).first()
+            if event:
+                temp = event.question_list
+                temp.remove(question.id)
+                event.question_list = temp
+            db.session.delete(question)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "Question removed"
             }
             return jsonify(response_object), 200
     except ValueError:

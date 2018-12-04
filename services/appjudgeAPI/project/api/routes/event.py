@@ -1,9 +1,10 @@
-# services/appjudgeAPI/project/api/routes/event.py
+# services/appeventAPI/project/api/routes/event.py
 
 from flask import Blueprint, jsonify, request
 from project.api.models.Event import Event
 from project import db
 from sqlalchemy import exc
+# import school.py, judge.py
 
 event_blueprint = Blueprint('event', __name__)
 
@@ -77,3 +78,28 @@ def get_single_event(event_id):
     except ValueError:
         return jsonify(response_object), 404
 
+@event_blueprint.route('/event/remove/<event_id>', methods=['GET'])
+def remove_event(event_id):
+    """Remove single Event details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Event does not exist'
+    }
+    try:
+        event = Event.query.filter_by(id=int(event_id)).first()
+        if not event:
+            return jsonify(response_object), 404
+        else:
+            # for s in event.school_list:
+            #     school.remove_school(school)
+            # for j in event.judge_list:
+            #     judge.remove_judge(judge)
+            db.session.delete(event)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "Event removed"
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404

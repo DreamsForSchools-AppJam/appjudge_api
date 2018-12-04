@@ -114,3 +114,30 @@ def get_single_judge_by_username(username, password):
             return jsonify(response_object), 200
     except ValueError:
         return jsonify(response_object), 404
+
+@judge_blueprint.route('/judge/remove/<judge_id>', methods=['GET'])
+def remove_judge(judge_id):
+    """Remove single Judge details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Judge does not exist'
+    }
+    try:
+        judge = Judge.query.filter_by(id=int(judge_id)).first()
+        if not judge:
+            return jsonify(response_object), 404
+        else:
+            event = Event.query.filter_by(id=judge.event_id).first()
+            if event:
+                temp = event.judge_list
+                temp.remove(judge.id)
+                event.judge_list = temp
+            db.session.delete(judge)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "Judge removed"
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404

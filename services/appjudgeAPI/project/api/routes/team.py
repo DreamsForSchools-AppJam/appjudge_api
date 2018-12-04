@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify, request
 from project.api.models.Team import Team
-from project.api.models.School import School
+from project.api.models.Team import Team
 from project import db
 from sqlalchemy import exc
 
@@ -51,7 +51,7 @@ def add_team():
                     school_id=school_id))
                 db.session.commit()
 
-                # Add new Team's id to School
+                # Add new Team's id to school
                 team = Team.query.filter_by(name=name, school_id=school_id).first()
                 school.add_team(team.id)
                 db.session.commit()
@@ -60,13 +60,13 @@ def add_team():
                 response_object['message'] = f'{name} was added!'
 
                 # TODO: remove additional responses
-                response_object['school_list'] = school.to_json()
+                response_object['team_list'] = team.to_json()
                 return jsonify(response_object), 201
             else:
-                response_object['message'] = 'Sorry. school {} does not exist.'.format(school_id)
+                response_object['message'] = 'Sorry. School {} does not exist.'.format(school_id)
                 return jsonify(response_object), 400
         else:
-            response_object['message'] = 'Sorry. That School already exists.'
+            response_object['message'] = 'Sorry. That Team already exists.'
             return jsonify(response_object), 400
     except exc.IntegrityError as e:
         db.session.rollback()
@@ -87,6 +87,33 @@ def get_single_team(team_id):
             response_object = {
                 'status': 'success',
                 'data': team.to_json()
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404
+
+@team_blueprint.route('/team/remove/<team_id>', methods=['GET'])
+def remove_team(team_id):
+    """Remove single Team details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Team does not exist'
+    }
+    try:
+        team = Team.query.filter_by(id=int(team_id)).first()
+        if not team:
+            return jsonify(response_object), 404
+        else:
+            school = Event.query.filter_by(id=team.school_id).first()
+            if school:
+                temp = school.team_list
+                temp.remove(team.id)
+                school.team_list = temp
+            db.session.delete(team)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "Team removed"
             }
             return jsonify(response_object), 200
     except ValueError:

@@ -1,9 +1,12 @@
+- Check workflow
+- Assign and create questions
 - Auto and manual assign teams to judges
-- Add drop down in dialogues
-- Add edit and remove functionality
+- Add remove functionality
+- Add ticks for scored or not scored in judge side
+- add login for admin
+
 - Add team info for judge side
 - Clear dialogue before opening
-- add login for admin
 - Check why judge got added with same username
 - Add front end for creating an event
 - add routes for react

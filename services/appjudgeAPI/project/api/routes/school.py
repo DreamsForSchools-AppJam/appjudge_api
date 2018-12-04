@@ -1,4 +1,4 @@
-# services/appjudgeAPI/project/api/routes/school.py
+# services/appschoolAPI/project/api/routes/school.py
 
 from flask import Blueprint, jsonify, request
 from project.api.models.School import School
@@ -84,6 +84,33 @@ def get_single_school(school_id):
             response_object = {
                 'status': 'success',
                 'data': school.to_json()
+            }
+            return jsonify(response_object), 200
+    except ValueError:
+        return jsonify(response_object), 404
+
+@school_blueprint.route('/school/remove/<school_id>', methods=['GET'])
+def remove_school(school_id):
+    """Remove single School details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'School does not exist'
+    }
+    try:
+        school = School.query.filter_by(id=int(school_id)).first()
+        if not school:
+            return jsonify(response_object), 404
+        else:
+            event = Event.query.filter_by(id=school.event_id).first()
+            if event:
+                temp = event.school_list
+                temp.remove(school.id)
+                event.school_list = temp
+            db.session.delete(school)
+            db.session.commit()
+            response_object = {
+                'status': 'success',
+                'message': "School removed"
             }
             return jsonify(response_object), 200
     except ValueError:

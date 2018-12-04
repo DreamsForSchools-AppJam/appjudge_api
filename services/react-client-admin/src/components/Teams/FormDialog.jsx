@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
+import SimpleMenu from '../SimpleMenu';
 
 export default class FormDialog extends React.Component {
   constructor(props) {
@@ -31,6 +32,10 @@ export default class FormDialog extends React.Component {
       [name]: event.target.value,
     });
   };
+
+  setSchoolID = (id) => {
+    this.setState({ school_id: id })
+  }
 
   getTeams = () => {
     console.log(this.state)
@@ -70,7 +75,6 @@ export default class FormDialog extends React.Component {
               onChange={this.handleChange('name')}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="info"
               label="Info"
@@ -79,15 +83,15 @@ export default class FormDialog extends React.Component {
               onChange={this.handleChange('info')}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="school_id"
-              label="School ID"
+              label="School ID or Choose School below"
               fullWidth
               required
               value={this.state.school_id}
               onChange={this.handleChange('school_id')}
             />
+            <SimpleMenu value={this.props.value} setter={this.setSchoolID} title="Choose School"/>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

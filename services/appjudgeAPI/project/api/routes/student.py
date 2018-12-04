@@ -37,34 +37,30 @@ def add_student():
         info = post_data.get('info')
         team_id = post_data.get('team_id')
 
-        student = Student.query.filter_by(name=name, team_id=team_id).first()
-        if not student:
-            team = Team.query.filter_by(id=team_id).first()
-            if team:
-                # Add new Student
-                db.session.add(Student(
-                    name=name,
-                    info=info,
-                    team_id=team_id))
-                db.session.commit()
+        team = Team.query.filter_by(id=team_id).first()
+        if team:
+            # Add new Student
+            db.session.add(Student(
+                name=name,
+                info=info,
+                team_id=team_id))
+            db.session.commit()
 
-                # Add new Student's id to Team
-                student = Student.query.filter_by(name=name, team_id=team_id).first()
-                team.add_student(student.id)
-                db.session.commit()
+            # Add new Student's id to Team
+            student = Student.query.filter_by(name=name, team_id=team_id).first()
+            team.add_student(student.id)
+            db.session.commit()
 
-                response_object['status'] = 'success'
-                response_object['message'] = f'{name} was added!'
+            response_object['status'] = 'success'
+            response_object['message'] = f'{name} was added!'
 
-                # TODO: remove additional responses
-                response_object['team_list'] = team.to_json()
-                return jsonify(response_object), 201
-            else:
-                response_object['message'] = 'Sorry. team {} does not exist.'.format(team_id)
-                return jsonify(response_object), 400
+            # TODO: remove additional responses
+            response_object['team_list'] = team.to_json()
+            return jsonify(response_object), 201
         else:
-            response_object['message'] = 'Sorry. That Team already exists.'
+            response_object['message'] = 'Sorry. team {} does not exist.'.format(team_id)
             return jsonify(response_object), 400
+            
     except exc.IntegrityError as e:
         db.session.rollback()
         return jsonify(response_object), 400

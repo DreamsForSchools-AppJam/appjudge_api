@@ -1,4 +1,8 @@
+- Auto and manual assign teams to judges
+- Add drop down in dialogues
+- Add edit and remove functionality
 - Add team info for judge side
+- Clear dialogue before opening
 - add login for admin
 - Check why judge got added with same username
 - Add front end for creating an event

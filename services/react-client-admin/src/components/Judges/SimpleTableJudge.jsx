@@ -26,7 +26,7 @@ function SimpleTableJudge(props) {
   return (
     <div>
     <div>
-      <FormDialog update={props.update}/>
+      <FormDialog update={props.update} value={props.events}/>
     </div>
     <div>
     <Paper className={classes.root}>

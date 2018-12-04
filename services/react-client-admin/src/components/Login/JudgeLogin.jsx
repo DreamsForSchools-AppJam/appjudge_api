@@ -7,7 +7,7 @@ import SearchAppBar from '../AppBars/SearchAppBar'
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { Redirect, Route, BrowserRouter } from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom'
 import JudgeHome from '../JudgeHome';
 
 

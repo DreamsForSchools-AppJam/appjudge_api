@@ -20,42 +20,35 @@ const styles = theme => ({
   },
 });
 
-
-function SimpleTable(props) {
+function SimpleTableStudent(props) {
   const { classes } = props;
 
   return (
     <div>
-    <div>
-      <FormDialog update={props.update}/>
-    </div>
+      <div>
+        <FormDialog update={props.update} value={props.teams}/>
+      </div>
     <div>
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell numeric>Event ID</TableCell>
-            <TableCell>Judge ID List</TableCell>
-            <TableCell numeric>Date</TableCell>
-            <TableCell numeric>Start Time</TableCell>
-            <TableCell numeric>End Time</TableCell>
-            <TableCell >Location</TableCell>
+            <TableCell numeric>Id</TableCell>
+            <TableCell>info</TableCell>
+            <TableCell>Team ID</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.value.map(event => {
+          {props.value.map(student => {
             return (
-              <TableRow key={event.id}>
-                <TableCell component="th" scope="event">
-                  {event.name}
+              <TableRow key={student.id}>
+                <TableCell component="th" scope="row">
+                  {student.name}
                 </TableCell>
-                <TableCell numeric>{event.id}</TableCell>
-                <TableCell>{event.judge_list.toString()}</TableCell>
-                <TableCell numeric>{event.date}</TableCell>
-                <TableCell numeric>{event.start_time}</TableCell>
-                <TableCell numeric>{event.end_time}</TableCell>
-                <TableCell >{event.location}</TableCell>
+                <TableCell numeric>{student.id}</TableCell>
+                <TableCell>{student.info}</TableCell>
+                <TableCell>{student.team_id}</TableCell>
               </TableRow>
             );
           })}
@@ -67,8 +60,8 @@ function SimpleTable(props) {
   );
 }
 
-SimpleTable.propTypes = {
+SimpleTableStudent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(SimpleTableStudent);

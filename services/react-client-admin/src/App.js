@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SearchAppBar from './components/AppBars/SearchAppBar'
+// import SearchAppBar from './components/AppBars/SearchAppBar'
 import './App.css';
-import JudgeLogin from './components/Login/JudgeLogin';
+// import JudgeLogin from './components/Login/JudgeLogin';
 import { Redirect } from 'react-router-dom'
 
 

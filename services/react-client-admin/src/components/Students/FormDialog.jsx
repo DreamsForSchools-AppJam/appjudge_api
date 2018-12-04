@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 import SimpleMenu from '../SimpleMenu';
@@ -14,10 +15,8 @@ export default class FormDialog extends React.Component {
     this.state = {
       open: false,
       name: '',
-      username: '',
-      job_title: '',
-      event_id: '',
-      password: ''
+      info: '',
+      team_id: '',
     };
   }
 
@@ -35,18 +34,16 @@ export default class FormDialog extends React.Component {
     });
   };
 
-  setEventID = (id) => {
-    this.setState({ event_id: id })
+  setTeamID = (id) => {
+    this.setState({ team_id: id })
   }
 
-  getJudges = () => {
+  getStudents = () => {
     console.log(this.state)
-    axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judge`,{
+    axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/student`,{
       name: this.state.name,
-      username: this.state.username,
-      job_title: this.state.job_title,
-      event_id: this.state.event_id,
-      password: this.state.password
+      info: this.state.info,
+      team_id: this.state.team_id,
     })
     .then(() => {this.props.update()})
     .then(() => {this.handleClose()})
@@ -56,13 +53,13 @@ export default class FormDialog extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="extendedFab" color="primary" onClick={this.handleClickOpen}>Add Judge</Button>
+        <Button variant="extendedFab" color="primary" onClick={this.handleClickOpen}>Add Student</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add Judge</DialogTitle>
+          <DialogTitle id="form-dialog-title">Add Student</DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
               To subscribe to this website, please enter your email address here. We will send
@@ -79,46 +76,28 @@ export default class FormDialog extends React.Component {
             />
             <TextField
               margin="dense"
-              id="job_title"
-              label="Job Title"
+              id="info"
+              label="Additional Info"
               fullWidth
-              value={this.state.job_title}
-              onChange={this.handleChange('job_title')}
+              value={this.state.info}
+              onChange={this.handleChange('info')}
             />
             <TextField
               margin="dense"
-              id="username"
-              label="Username"
+              id="team_id"
+              label="Team ID or Choose Team below"
               fullWidth
               required
-              value={this.state.username}
-              onChange={this.handleChange('username')}
+              value={this.state.team_id}
+              onChange={this.handleChange('team_id')}
             />
-            <TextField
-              margin="dense"
-              id="password"
-              label="Password"
-              fullWidth
-              required
-              value={this.state.password}
-              onChange={this.handleChange('password')}
-            />
-            <TextField
-              margin="dense"
-              id="event_id"
-              label="Event ID or Choose Event below"
-              fullWidth
-              required
-              value={this.state.event_id}
-              onChange={this.handleChange('event_id')}
-            />
-            <SimpleMenu value={this.props.value} setter={this.setEventID} title="Choose Event"/>
+            <SimpleMenu value={this.props.value} setter={this.setTeamID} title="Choose Team"/>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.getJudges} color="primary">
+            <Button onClick={this.getStudents} color="primary">
               Add
             </Button>
           </DialogActions>

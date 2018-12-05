@@ -52,12 +52,14 @@ const styles = theme => ({
 				})
 			}
 			else{
-				// Show pop up
+                // Show pop up
+                alert("ERROR: Invalid Username or password")
 				console.log("ERROR: Invalid Username or password")
 			}
 		})
 		.catch((err) => { 
-			// Show pop up
+            // Show pop up
+            alert("ERROR: Invalid Username or password")
 			console.log("ERROR: Invalid Username or password", err) 
 		});
     }

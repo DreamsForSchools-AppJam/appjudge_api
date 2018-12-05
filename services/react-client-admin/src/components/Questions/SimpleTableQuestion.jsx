@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-function SimpleTableSchool(props) {
+function SimpleTableQuestion(props) {
   const { classes } = props;
 
   return (
@@ -33,20 +33,22 @@ function SimpleTableSchool(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell numeric>Id</TableCell>
-            <TableCell>Info</TableCell>
+            <TableCell>Question</TableCell>
+            <TableCell numeric>ID</TableCell>
+            <TableCell numeric>Max Score</TableCell>
+            <TableCell numeric>Event ID</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.value.map(school => {
+            {props.value.map(question => {
             return (
-              <TableRow key={school.id}>
+              <TableRow key={question.id}>
                 <TableCell component="th" scope="row">
-                  {school.name}
+                  {question.question}
                 </TableCell>
-                <TableCell numeric>{school.id}</TableCell>
-                <TableCell >{school.info}</TableCell>
+                <TableCell numeric>{question.id}</TableCell>
+                <TableCell numeric>{question.max_score}</TableCell>
+                <TableCell numeric>{question.event_id}</TableCell>
               </TableRow>
             );
           })}
@@ -58,8 +60,8 @@ function SimpleTableSchool(props) {
   );
 }
 
-SimpleTableSchool.propTypes = {
+SimpleTableQuestion.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTableSchool);
+export default withStyles(styles)(SimpleTableQuestion);

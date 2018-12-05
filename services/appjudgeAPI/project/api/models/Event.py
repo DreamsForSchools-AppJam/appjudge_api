@@ -51,3 +51,6 @@ class Event(db.Model):
     
     def add_school(self, school_id):
         self.school_list = self.school_list + [school_id]
+
+    def add_question(self, question_id):
+        self.question_list = self.question_list + [question_id]

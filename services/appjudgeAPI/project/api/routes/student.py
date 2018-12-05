@@ -1,7 +1,7 @@
 # services/appjudgeAPI/project/api/routes/student.py
 
 from flask import Blueprint, jsonify, request
-from project.api.models.Student import Student
+from project.api.models.Team import Team
 from project.api.models.Student import Student
 from project import db
 from sqlalchemy import exc

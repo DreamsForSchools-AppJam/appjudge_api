@@ -20,6 +20,7 @@ class JudgeHome extends Component {
 
     componentDidMount(){
         // this.setTeams(this.props.team_list)
+        
         this.setTeams(this.judge.team_list)
     }
 

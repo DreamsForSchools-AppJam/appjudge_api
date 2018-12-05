@@ -38,7 +38,7 @@ def add_judge():
         job_title = post_data.get('job_title')
         event_id = post_data.get('event_id')
         # question_list = post_data.get('question_list')
-        # team_list = post_data.get('team_list')
+        team_list = post_data.get('team_list')
         password = post_data.get('password')
         
         judge = Judge.query.filter_by(username=username).first()
@@ -51,7 +51,9 @@ def add_judge():
                     name=name,
                     job_title=job_title,
                     event_id=event_id,
-                    password=password))
+                    password=password,
+                    question_list=event.question_list,
+                    team_list=team_list))
                 db.session.commit()
 
                 # Add new Judge's id to Event

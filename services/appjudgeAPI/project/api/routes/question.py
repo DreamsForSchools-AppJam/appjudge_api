@@ -55,37 +55,37 @@ def add_question():
 
     try:
         # TODO: update information
-        question = post_data.get('question')
+        questionval = post_data.get('question')
         max_score = post_data.get('max_score')
         event_id = post_data.get('event_id')
 
-        question = Question.query.filter_by(question=question, event_id=event_id).first()
+        question = Question.query.filter_by(question=questionval, event_id=event_id).first()
         if not question:
             event = Event.query.filter_by(id=event_id).first()
             if event:
                 # Add new Question
                 db.session.add(Question(
-                    question=question,
+                    question=questionval,
                     max_score=max_score,
                     event_id=event_id))
                 db.session.commit()
 
                 # Add new Question's id to Teams
-                question = Question.query.filter_by(question=question, event_id=event_id).first()
+                question = Question.query.filter_by(question=questionval, event_id=event_id).first()
                 for sid in event.school_list:
                     for t in School.query.filter_by(id=sid).first().team_list:
                         team = Team.query.filter_by(id=t).first()
                         team.add_question(question.id)
+                event.add_question(question.id)
                 db.session.commit()
 
                 response_object['status'] = 'success'
-                response_object['message'] = f'{question} was added!'
+                response_object['message'] = 'Question was added!'
 
                 # TODO: remove additional responses
-                response_object['team_list'] = team.to_json()
                 return jsonify(response_object), 201
             else:
-                response_object['message'] = 'Sorry. team {} does not exist.'.format(event_id)
+                response_object['message'] = 'Sorry. Event {} does not exist.'.format(event_id)
                 return jsonify(response_object), 400
         else:
             response_object['message'] = 'Sorry. That Question already exists.'
@@ -131,6 +131,12 @@ def remove_question(question_id):
                 temp = event.question_list
                 temp.remove(question.id)
                 event.question_list = temp
+                for sid in event.school_list:
+                    for t in School.query.filter_by(id=sid).first().team_list:
+                        team = Team.query.filter_by(id=t).first()
+                        temp = team.question_list
+                        temp.remove(question.id)
+                        team.question_list = temp
             db.session.delete(question)
             db.session.commit()
             response_object = {

@@ -1,7 +1,8 @@
 # services/appjudgeAPI/project/api/routes/team.py
 
 from flask import Blueprint, jsonify, request
-from project.api.models.Team import Team
+from project.api.models.School import School
+from project.api.models.Event import Event
 from project.api.models.Team import Team
 from project import db
 from sqlalchemy import exc
@@ -44,11 +45,13 @@ def add_team():
         if not team:
             school = School.query.filter_by(id=school_id).first()
             if school:
+                event = Event.query.filter_by(id=school.event_id).first()
                 # Add new Team
                 db.session.add(Team(
                     name=name,
                     info=info,
-                    school_id=school_id))
+                    school_id=school_id,
+                    question_list=event.question_list))
                 db.session.commit()
 
                 # Add new Team's id to school
@@ -104,7 +107,7 @@ def remove_team(team_id):
         if not team:
             return jsonify(response_object), 404
         else:
-            school = Event.query.filter_by(id=team.school_id).first()
+            school = School.query.filter_by(id=team.school_id).first()
             if school:
                 temp = school.team_list
                 temp.remove(team.id)

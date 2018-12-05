@@ -1,3 +1,7 @@
+- Assign teams for judges
+- Event info in Schools tab
+- Drop down filtering
+- alerts
 - Check workflow
 - Assign and create questions
 - Auto and manual assign teams to judges

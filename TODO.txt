@@ -1,19 +1,15 @@
-- Assign teams for judges
+- auto Assign teams for judges
+- Clean columns for admin
 - Event info in Schools tab
 - Drop down filtering
 - alerts
-- Check workflow
-- Assign and create questions
-- Auto and manual assign teams to judges
 - Add remove functionality
+
 - Add ticks for scored or not scored in judge side
 - add login for admin
-
 - Add team info for judge side
 - Clear dialogue before opening
 - Check why judge got added with same username
 - Add front end for creating an event
 - add routes for react
-
-Scores:
-- Check the score default value of -1
+- filter admin side by event

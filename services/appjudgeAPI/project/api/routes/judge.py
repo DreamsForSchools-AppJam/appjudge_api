@@ -3,8 +3,11 @@
 from flask import Blueprint, jsonify, request
 from project.api.models.Judge import Judge
 from project.api.models.Event import Event
+from project.api.models.School import School
 from project import db
 from sqlalchemy import exc
+from collections import defaultdict
+from math import ceil
 
 judge_blueprint = Blueprint('judge', __name__)
 
@@ -143,3 +146,88 @@ def remove_judge(judge_id):
             return jsonify(response_object), 200
     except ValueError:
         return jsonify(response_object), 404
+
+def _auto_assign(schoolsWithTeams: dict, judges: list):
+    numTeams = sum([len(x) for x in list(schoolsWithTeams.values())])
+
+    if len(judges) > numTeams:
+        return dict()
+
+    allTeams = []
+    for teams in list(schoolsWithTeams.values()):
+        allTeams.extend(teams)
+
+    limit = min(len(judges), ceil(float(numTeams)/float(len(judges))))
+
+    judgeIndex = 0
+
+    assignments = defaultdict(set)
+
+    while numTeams != 0:
+        for team in allTeams:
+            if len(assignments[team]) < limit:
+                if judges[judgeIndex] in assignments[team]:
+                    judgeIndex += 1
+                    if len(judges) <= judgeIndex:
+                        judgeIndex = 0
+                assignments[team].add(judges[judgeIndex])
+                if len(assignments[team]) >= limit:
+                    numTeams -= 1
+                judgeIndex += 1
+                if len(judges) <= judgeIndex:
+                    judgeIndex = 0
+
+    result = defaultdict(list)
+
+    for team, judges in assignments.items():
+        for judge in judges:
+            result[judge].append(team)
+
+    return result
+
+@judge_blueprint.route('/judge/autoassign', methods=['POST'])
+def judge_autoassign():
+    post_data = request.get_json()
+
+    # Check for invalid payload
+    response_object = {
+        'status': 'fail',
+        'message': 'Invalid payload.'
+    }
+    if not post_data:
+        return jsonify(response_object), 400
+
+    try:
+        # TODO: update information
+        event_id= post_data.get('event_id')
+
+        event = Event.query.filter_by(id=event_id).first()
+        if event:
+            # Auto assigning the Teams to the Judges
+            # print("THIS WAS HERE")
+            data = {}
+            for sc in list(event.school_list):
+                data[sc] = list(School.query.filter_by(id=int(sc)).first().team_list)
+            result = _auto_assign(data, event.judge_list)
+
+            for jid, tl in result.items():
+                judge = Judge.query.filter_by(id=jid).first()
+                if judge:
+                    # Add new Judge
+                    judge.team_list = tl
+                    db.session.commit()
+                else:
+                    response_object['message'] = 'Sorry. Event {} does not exist.'.format(event_id)
+                    return jsonify(response_object), 400
+            
+            response_object['status'] = 'success'
+            response_object['message'] = 'Auto assigned!'
+            # response_object['data'] = '{}'.format(result)
+            
+            return jsonify(response_object), 201
+        else:
+            response_object['message'] = 'Sorry. That username already exists.'
+            return jsonify(response_object), 400
+    except exc.IntegrityError as e:
+        db.session.rollback()
+        return jsonify(response_object), 400

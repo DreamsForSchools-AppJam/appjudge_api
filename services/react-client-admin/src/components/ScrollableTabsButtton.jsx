@@ -130,22 +130,22 @@ class ScrollableTabsButtonForce extends React.Component {
             textColor="primary"
           >
             <Tab label="Events" icon={<Schedule />} />
-            <Tab label="Questions" icon={<Work />} />
             <Tab label="Schools" icon={<Work />} />
             <Tab label="Teams" icon={<ShoppingBasket />} />
             <Tab label="Students" icon={<Accessibility />} />
             <Tab label="Mentors" icon={<Accessibility />} />
+            <Tab label="Questions" icon={<Work />} />
             <Tab label="Judges" icon={<PersonPinIcon />} />
             <Tab label="Scores" icon={<Work />} />
           </Tabs>
         </AppBar>
         {/* {console.log(this.state.events)} */}
         {value === 0 && <TabContainer><SimpleTableEvent update={this.update.bind(this)} value={this.state.events}/></TabContainer>}
-        {value === 1 && <TabContainer><SimpleTableQuestion update={this.update.bind(this)} value={this.state.questions} events={this.state.events}/></TabContainer>}
-        {value === 2 && <TabContainer><SimpleTableSchool update={this.update.bind(this)} value={this.state.schools} events={this.state.events}/></TabContainer>}
-        {value === 3 && <TabContainer><SimpleTableTeam update={this.update.bind(this)} value={this.state.teams} schools={this.state.schools}/></TabContainer>}
-        {value === 4 && <TabContainer><SimpleTableStudent update={this.update.bind(this)} value={this.state.students}  teams={this.state.teams}/></TabContainer>}
-        {value === 5 && <TabContainer><SimpleTableMentor update={this.update.bind(this)} value={this.state.mentors}  teams={this.state.teams}/></TabContainer>}
+        {value === 1 && <TabContainer><SimpleTableSchool update={this.update.bind(this)} value={this.state.schools} events={this.state.events}/></TabContainer>}
+        {value === 2 && <TabContainer><SimpleTableTeam update={this.update.bind(this)} value={this.state.teams} schools={this.state.schools}/></TabContainer>}
+        {value === 3 && <TabContainer><SimpleTableStudent update={this.update.bind(this)} value={this.state.students}  teams={this.state.teams}/></TabContainer>}
+        {value === 4 && <TabContainer><SimpleTableMentor update={this.update.bind(this)} value={this.state.mentors}  teams={this.state.teams}/></TabContainer>}
+        {value === 5 && <TabContainer><SimpleTableQuestion update={this.update.bind(this)} value={this.state.questions} events={this.state.events}/></TabContainer>}
         {value === 6 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
         {value === 7 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
       </div>

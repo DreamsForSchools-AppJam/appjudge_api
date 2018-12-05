@@ -17,7 +17,8 @@ export default class FormDialog extends React.Component {
       username: '',
       job_title: '',
       event_id: '',
-      password: ''
+      password: '',
+      team_list: ''
     };
   }
 
@@ -40,13 +41,20 @@ export default class FormDialog extends React.Component {
   }
 
   getJudges = () => {
-    console.log(this.state)
+    var teams = []
+    var spl = this.state.team_list.split(" ")
+    for (var val in spl){
+      teams.push(Number(spl[val]))
+    }
+    // console.log(this.state)
+    // console.log(teams)
     axios.post(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judge`,{
       name: this.state.name,
       username: this.state.username,
       job_title: this.state.job_title,
       event_id: this.state.event_id,
-      password: this.state.password
+      password: this.state.password,
+      team_list: teams
     })
     .then(() => {this.props.update()})
     .then(() => {this.handleClose()})
@@ -102,6 +110,14 @@ export default class FormDialog extends React.Component {
               required
               value={this.state.password}
               onChange={this.handleChange('password')}
+            />
+            <TextField
+              margin="dense"
+              id="team_list"
+              label="Manually assign teams [inp = space separated team ids]"
+              fullWidth
+              value={this.state.team_list}
+              onChange={this.handleChange('team_list')}
             />
             <TextField
               margin="dense"

@@ -260,20 +260,26 @@ class SimpleTableScores extends React.Component{
                   )
                 })
               }
+              <TableCell numeric><b>Total Score</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.final.map(item => {
               // classes.event_id = score.event_id
               console.log("Finals", item)
+              var teamtotal = 0
               return (
                 <TableRow key={item[1]}>
                   <TableCell component="th">{item[0]}</TableCell>
                   {item[2].map(score => {
+                    if(score !== '-'){
+                      teamtotal = teamtotal + Number(score)
+                    }
                     return (
                     <TableCell numeric>{score}</TableCell>
                     )
                   })}
+                  <TableCell numeric><b>{teamtotal}</b></TableCell>
                 </TableRow>
               );
             })}

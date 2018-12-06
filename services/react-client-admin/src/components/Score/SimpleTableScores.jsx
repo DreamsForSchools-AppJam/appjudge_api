@@ -44,9 +44,11 @@ class SimpleTableScores extends React.Component{
   setEventID = (id) => {
     this.setState({ event_id: id })
     // this.getScores(id)
-    var event = this.createEvent(id)
-    this.setState({schools: event.school_list})
-    this.createData(event)
+    this.setState({event: this.createEvent(id)})
+    this.getTotalScore(id)
+    .then(scores => {
+      console.log("Total scores", scores)
+    })
   }
 
   createEvent = (event_id) =>{
@@ -179,7 +181,7 @@ class SimpleTableScores extends React.Component{
     console.log("Total question")
     var proms = [];
 			for(var i=0; i<question_list.length; i++){
-				proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/score/${event_id}/${team_id}/${judge_id}/${question_list[i]}`))
+				proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event/totalscore/${event_id}`))
         .then((res) => {return res.data.data;}))
       }
       return Promise.all(proms)

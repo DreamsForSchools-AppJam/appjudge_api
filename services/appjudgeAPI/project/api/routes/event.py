@@ -164,13 +164,13 @@ def get_event_totalscore(event_id):
                 for t in teams.keys():
                     t = int(t)
                     if j not in teams[t]['judges'].keys():
-                        fl.write("{}\n".format("here 1"))
+                        # fl.write("{}\n".format("here 1"))
                         teams[t]['judges'][j] = {}
                         teams[t]['judges'][j]['totalscore'] = '-'
-                        fl.write("{}\n".format("here 2"))
+                        # fl.write("{}\n".format("here 2"))
                         teams[t]['judges'][j]['id'] = j
-                        fl.write("{}\n".format("here 3"))
-                        fl.write("{}\n".format(teams[t]['judges'][j]))
+                        # fl.write("{}\n".format("here 3"))
+                        # fl.write("{}\n".format(teams[t]['judges'][j]))
             
             fl.close()
             db.session.commit()

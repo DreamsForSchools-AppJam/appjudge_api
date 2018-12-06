@@ -87,6 +87,7 @@ class ScoringTable extends React.Component {
 							{/* {console.log(questions)} */}
 							{questions.map((question, index) => {
 									totalScore = Number(totalScore) + Number(question.score)
+									this.props.teams.score = totalScore
 									maxScore = Number(maxScore) + Number(question.max_score)
 									return (
 									<TableRow key={question.id}>

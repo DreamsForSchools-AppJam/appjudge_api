@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TeamCardHolder from './Cards/TeamCardHolder';
 import JudgeAppbar from './AppBars/JudgeAppBar';
+import Clear from '@material-ui/icons/Clear';
+import Done from '@material-ui/icons/Done';
 import axios from 'axios';
 
 class JudgeHome extends Component {
@@ -8,8 +10,14 @@ class JudgeHome extends Component {
     constructor(props){
         super(props);
         this.state = {
-            teams: []
+            teams: [],
+            mainvals: {}
         };
+
+        for(var i = 0; i < this.state.teams.length; i++){
+            this.state.mainvals[this.state.teams[i].id] = <Clear/>
+        }
+
         // Set the judge_id on login
         this.judge = this.props.location.state.judge
         console.log("Inside JudgeHome", this.props)
@@ -27,7 +35,15 @@ class JudgeHome extends Component {
     update = () => {
         this.forceUpdate()
     }
-	
+    
+    markDone = (id) => {
+        // vals[id] = <Done/>
+        var mainvals = this.state.mainvals
+        mainvals[id]= <Done/>
+        this.setState({mainvals: mainvals})
+        console.log("Done was called", this.state.mainvals, id)
+    }
+
 	addTeam(team){
 		// console.log(team.school_id)
 		this.getSchool(team.school_id)
@@ -103,7 +119,7 @@ class JudgeHome extends Component {
                     <JudgeAppbar />
                 </div>
                 <div>
-                    <TeamCardHolder value={this.state.teams}/>
+                    <TeamCardHolder value={this.state.teams} mainvals={this.state.mainvals} markDone={this.markDone.bind(this)}/>
                 </div>
             </div>
         );

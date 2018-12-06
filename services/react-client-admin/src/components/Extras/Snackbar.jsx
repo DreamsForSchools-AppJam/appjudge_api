@@ -92,10 +92,15 @@ class CustomizedSnackbars extends React.Component {
 	}
 
   handleClick = () => {
+    var type = this.props.checkLimit()
     this.setState({ 
 			open: true,  
-			type: this.props.checkLimit()
-		});
+			type: type
+    });
+    setTimeout(() => {
+    if (type === "success"){
+      this.props.close()
+    }}, 1200)
   };
 
   handleClose = (event, reason) => {

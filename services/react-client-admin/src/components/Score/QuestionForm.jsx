@@ -43,6 +43,7 @@ export default class QuestionForm extends React.Component {
         }
         else{
             this.sendScores(this.state.team.event_id, this.state.team.id, this.state.team.judge_id)
+            this.props.isdone(this.props.teamid)
             return "success"
         }
     }
@@ -106,14 +107,14 @@ export default class QuestionForm extends React.Component {
                 Please make sure you check your score and make sure it is less than the max before submitting it
                 </DialogContentText>
 
-                <ScoringTable mainQuestions={this.state.mainQuestions}/>
+                <ScoringTable mainQuestions={this.state.mainQuestions} teams={this.props.team}/>
 
             </DialogContent>
             <DialogActions>
                 <Button onClick={this.handleClose} color="primary">
                 Cancel
                 </Button>
-                <CustomizedSnackbars onClick={this.handleClose} checkLimit={this.checkLimit.bind(this)} color="primary"/>
+                <CustomizedSnackbars onClick={this.handleClose} checkLimit={this.checkLimit.bind(this)} close={this.handleClose} color="primary"/>
                 {/* Submit
                 </CustomizedSnackbars> */}
             </DialogActions>

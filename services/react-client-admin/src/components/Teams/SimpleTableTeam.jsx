@@ -35,7 +35,8 @@ function SimpleTableTeam(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell numeric>Id</TableCell>
+            <TableCell numeric>ID</TableCell>
+            <TableCell numeric>School ID</TableCell>
             <TableCell>Info</TableCell>
           </TableRow>
         </TableHead>
@@ -47,6 +48,7 @@ function SimpleTableTeam(props) {
                   {team.name}
                 </TableCell>
                 <TableCell numeric>{team.id}</TableCell>
+                <TableCell numeric>{team.school_id}</TableCell>
                 <TableCell >{team.info}</TableCell>
               </TableRow>
             );

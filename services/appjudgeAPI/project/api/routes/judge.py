@@ -204,7 +204,7 @@ def judge_autoassign():
         event = Event.query.filter_by(id=event_id).first()
         if event:
             # Auto assigning the Teams to the Judges
-            # print("THIS WAS HERE")
+            # print("ANSHUL WAS HERE")
             data = {}
             for sc in list(event.school_list):
                 data[sc] = list(School.query.filter_by(id=int(sc)).first().team_list)
@@ -231,3 +231,23 @@ def judge_autoassign():
     except exc.IntegrityError as e:
         db.session.rollback()
         return jsonify(response_object), 400
+
+# @judge_blueprint.route('/judge/<judge_id>', methods=['GET'])
+# def get_single_judge(judge_id):
+#     """Get single Judge details"""
+#     response_object = {
+#         'status': 'fail',
+#         'message': 'Judge does not exist'
+#     }
+#     try:
+#         judge = Judge.query.filter_by(id=int(judge_id)).first()
+#         if not judge:
+#             return jsonify(response_object), 404
+#         else:
+#             response_object = {
+#                 'status': 'success',
+#                 'data': judge.to_json()
+#             }
+#             return jsonify(response_object), 200
+#     except ValueError:
+#         return jsonify(response_object), 404

@@ -52,8 +52,8 @@ function TeamCardHolder(props) {
                         <TableCell>Name</TableCell>
                         <TableCell>School Name</TableCell>
                         <TableCell>Information</TableCell>
-                        {/* <TableCell numeric>Total Score</TableCell>
-                        <TableCell numeric>Max Score</TableCell> */}
+                        <TableCell numeric>Total Score</TableCell>
+                        {/* <TableCell numeric>Max Score</TableCell> */}
                         <TableCell>Score Button</TableCell>
                     </TableRow>
                 </TableHead>
@@ -66,8 +66,8 @@ function TeamCardHolder(props) {
                             </TableCell>
                             <TableCell>{team.school_name}</TableCell>
                             <TableCell>{team.info}</TableCell>
-                            {/* <TableCell numeric>{team.score}</TableCell>
-                            <TableCell numeric>{team.max_score}</TableCell> */}
+                            <TableCell numeric>{team.score}</TableCell>
+                            {/* <TableCell numeric>{team.max_score}</TableCell> */}
                             <TableCell>
                                 {/* <Button  size="small" variant="contained" color="primary">Score</Button> */}
                                 <QuestionForm team={team}/>

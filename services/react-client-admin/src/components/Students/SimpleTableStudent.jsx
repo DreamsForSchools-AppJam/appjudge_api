@@ -34,7 +34,7 @@ function SimpleTableStudent(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell numeric>Id</TableCell>
+            <TableCell numeric>ID</TableCell>
             <TableCell>info</TableCell>
             <TableCell>Team ID</TableCell>
           </TableRow>

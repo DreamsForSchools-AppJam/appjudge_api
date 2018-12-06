@@ -34,8 +34,9 @@ function SimpleTableSchool(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell numeric>Id</TableCell>
-            <TableCell>Info</TableCell>
+            <TableCell numeric>ID</TableCell>
+            <TableCell>Location</TableCell>
+            <TableCell>Team ID list</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -47,6 +48,7 @@ function SimpleTableSchool(props) {
                 </TableCell>
                 <TableCell numeric>{school.id}</TableCell>
                 <TableCell >{school.info}</TableCell>
+                <TableCell >{school.team_list.toString()}</TableCell>
               </TableRow>
             );
           })}

@@ -35,11 +35,9 @@ function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell numeric>Event ID</TableCell>
+            <TableCell numeric>ID</TableCell>
             <TableCell>Judge ID List</TableCell>
-            <TableCell numeric>Date</TableCell>
-            <TableCell numeric>Start Time</TableCell>
-            <TableCell numeric>End Time</TableCell>
+            <TableCell>School ID List</TableCell>
             <TableCell >Location</TableCell>
           </TableRow>
         </TableHead>
@@ -52,9 +50,7 @@ function SimpleTable(props) {
                 </TableCell>
                 <TableCell numeric>{event.id}</TableCell>
                 <TableCell>{event.judge_list.toString()}</TableCell>
-                <TableCell numeric>{event.date}</TableCell>
-                <TableCell numeric>{event.start_time}</TableCell>
-                <TableCell numeric>{event.end_time}</TableCell>
+                <TableCell>{event.school_list.toString()}</TableCell>
                 <TableCell >{event.location}</TableCell>
               </TableRow>
             );

@@ -1,8 +1,5 @@
-- auto Assign teams for judges
-- Clean columns for admin
-- Event info in Schools tab
-- Drop down filtering
-- alerts
+- Show scores
+- Show total score instead of ticks
 - Add remove functionality
 
 - Add ticks for scored or not scored in judge side
@@ -11,5 +8,4 @@
 - Clear dialogue before opening
 - Check why judge got added with same username
 - Add front end for creating an event
-- add routes for react
 - filter admin side by event

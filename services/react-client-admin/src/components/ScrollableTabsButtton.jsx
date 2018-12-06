@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Schedule from '@material-ui/icons/Schedule';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
+import List from '@material-ui/icons/List';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import Accessibility from '@material-ui/icons/Accessibility';
 import Work from '@material-ui/icons/Work';
@@ -18,6 +19,7 @@ import SimpleTableStudent from './Students/SimpleTableStudent';
 import SimpleTableMentor from './Mentors/SimpleTableMentor';
 import SimpleTableQuestion from './Questions/SimpleTableQuestion';
 import axios from 'axios';
+import SimpleTableScores from './Score/SimpleTableScores';
 
 
 function TabContainer(props) {
@@ -134,9 +136,9 @@ class ScrollableTabsButtonForce extends React.Component {
             <Tab label="Teams" icon={<ShoppingBasket />} />
             <Tab label="Students" icon={<Accessibility />} />
             <Tab label="Mentors" icon={<Accessibility />} />
-            <Tab label="Questions" icon={<Work />} />
+            <Tab label="Questions" icon={<List />} />
             <Tab label="Judges" icon={<PersonPinIcon />} />
-            <Tab label="Scores" icon={<Work />} />
+            <Tab label="Scores" icon={<List />} />
           </Tabs>
         </AppBar>
         {/* {console.log(this.state.events)} */}
@@ -147,7 +149,7 @@ class ScrollableTabsButtonForce extends React.Component {
         {value === 4 && <TabContainer><SimpleTableMentor update={this.update.bind(this)} value={this.state.mentors}  teams={this.state.teams}/></TabContainer>}
         {value === 5 && <TabContainer><SimpleTableQuestion update={this.update.bind(this)} value={this.state.questions} events={this.state.events}/></TabContainer>}
         {value === 6 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
-        {value === 7 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
+        {value === 7 && <TabContainer><SimpleTableScores update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
       </div>
     );
   }

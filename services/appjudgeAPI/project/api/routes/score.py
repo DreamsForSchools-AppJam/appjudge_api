@@ -93,3 +93,26 @@ def get_single_score(event_id, team_id, judge_id, question_id):
             return jsonify(response_object), 200
     except ValueError:
         return jsonify(response_object), 404
+
+@score_blueprint.route('/scores/<event_id>', methods=['GET'])
+def get_event_score(event_id):
+    """Get Score details"""
+    response_object = {
+        'status': 'fail',
+        'message': 'Score does not exist'
+    }
+    try:
+        scores = Score.query.filter(event_id == int(event_id))
+        if scores:
+            # fl = open("logger.txt", "w+")
+            # fl.write(scores)
+            # fl.close()
+            response_object = {
+                'status': 'success',
+                'data': list(scores)
+            }
+            return jsonify(response_object), 200
+        else:
+            return jsonify(response_object), 404
+    except ValueError:
+        return jsonify(response_object), 404

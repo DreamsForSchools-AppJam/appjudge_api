@@ -37,17 +37,44 @@ class SimpleTableScores extends React.Component{
       schools: [],
       team_list: [],
       teams: [],
-      teamsMap: {}
+      teamsMap: {},
+      finalmap: {},
+      judgenames: [],
+      final: [["","",[""]]],
+      teamnames: []
     }
   }
 
   setEventID = (id) => {
     this.setState({ event_id: id })
-    // this.getScores(id)
-    this.setState({event: this.createEvent(id)})
-    this.getTotalScore(id)
-    .then(scores => {
-      console.log("Total scores", scores)
+    this.getEvent(id)
+    .then((event) => {
+      this.setState({event: event.data.data})
+      this.getTotalScore(id)
+      .then(scores => {
+        scores = scores.data.data
+        this.setState({finalmap: scores})
+        var final = []
+        Object.keys(scores).sort().forEach(key => {
+          var scs = []
+          Object.keys(scores[key]['judges']).sort().forEach(k => {
+            scs.push(scores[key]['judges'][k]['totalscore'])
+          })
+          final.push([scores[key]['name'], key, scs])
+        })
+        this.setState({final: final})
+        console.log("Total scores", final)
+        return scores
+      })
+      .then(teams => {
+        // console.log("State", this.state.event)
+        this.getJudges(this.state.event.judge_list)
+        .then(judges => {
+          judges = judges.map(judge => judge.name)
+          // console.log("Judges", judges)
+          this.setState({judgenames: judges})
+        })
+      })
     })
   }
 
@@ -177,14 +204,9 @@ class SimpleTableScores extends React.Component{
       return Promise.all(proms)
   }
 
-  getTotalScore = (event_id, team_id, judge_id, question_list) => {
+  getTotalScore = (event_id) => {
     console.log("Total question")
-    var proms = [];
-			for(var i=0; i<question_list.length; i++){
-				proms.push(Promise.resolve(axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event/totalscore/${event_id}`))
-        .then((res) => {return res.data.data;}))
-      }
-      return Promise.all(proms)
+		return axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event/totalscore/${event_id}`)
   }
 
   getSchools = (school_list) => {
@@ -207,6 +229,10 @@ class SimpleTableScores extends React.Component{
       return Promise.all(proms)
   }
 
+  getEvent = (id) => {
+    return axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event/${id}`)
+  }
+
   getScores = (id) => {
     console.log(this.state, id)
     axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/scores/${id}`)
@@ -227,23 +253,27 @@ class SimpleTableScores extends React.Component{
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell numeric>Event ID</TableCell>
-              <TableCell numeric>Judge ID</TableCell>
-              <TableCell numeric>Team ID</TableCell>
-              <TableCell numeric>Question ID</TableCell>
-              <TableCell numeric>Score</TableCell>
+              <TableCell>Team name</TableCell>
+              {this.state.judgenames.map(name => {
+                return (
+                  <TableCell key={name} numeric>{name}</TableCell>
+                  )
+                })
+              }
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.scores.map(score => {
-              classes.event_id = score.event_id
+            {this.state.final.map(item => {
+              // classes.event_id = score.event_id
+              console.log("Finals", item)
               return (
-                <TableRow key={score.id}>
-                  
-                  <TableCell numeric>{score.event_id}</TableCell>
-                  <TableCell numeric>{score.judge_id}</TableCell>
-                  <TableCell numeric>{score.team_id}</TableCell>
-                  <TableCell numeric>{score.score}</TableCell>
+                <TableRow key={item[1]}>
+                  <TableCell component="th">{item[0]}</TableCell>
+                  {item[2].map(score => {
+                    return (
+                    <TableCell numeric>{score}</TableCell>
+                    )
+                  })}
                 </TableRow>
               );
             })}

@@ -100,7 +100,7 @@ class CustomizedSnackbars extends React.Component {
     setTimeout(() => {
     if (type === "success"){
       this.props.close()
-    }}, 1200)
+    }}, 1000)
   };
 
   handleClose = (event, reason) => {

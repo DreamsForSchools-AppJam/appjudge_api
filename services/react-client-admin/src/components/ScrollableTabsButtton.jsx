@@ -99,7 +99,49 @@ class ScrollableTabsButtonForce extends React.Component {
       axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/questions`)
       .then((res) => { this.setState({ questions: res.data.data.questions }); })
       .catch((err) => { console.log(err); });
-  }
+    }
+
+    removeQuestion(question_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/question/remove/${question_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeSchool(school_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/school/remove/${school_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeTeam(team_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/team/remove/${team_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeStudent(student_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/student/remove/${student_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeMentor(mentor_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/mentor/remove/${mentor_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeEvent(event_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/event/remove/${event_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
+
+    removeJudge(judge_id){
+      axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judge/remove/${judge_id}`)
+      .then((res) => { this.update() })
+      .catch((err) => { console.log(err); });
+    }
 
     componentDidMount(){
         this.update()
@@ -142,14 +184,30 @@ class ScrollableTabsButtonForce extends React.Component {
           </Tabs>
         </AppBar>
         {/* {console.log(this.state.events)} */}
-        {value === 0 && <TabContainer><SimpleTableEvent update={this.update.bind(this)} value={this.state.events}/></TabContainer>}
-        {value === 1 && <TabContainer><SimpleTableSchool update={this.update.bind(this)} value={this.state.schools} events={this.state.events}/></TabContainer>}
-        {value === 2 && <TabContainer><SimpleTableTeam update={this.update.bind(this)} value={this.state.teams} schools={this.state.schools}/></TabContainer>}
-        {value === 3 && <TabContainer><SimpleTableStudent update={this.update.bind(this)} value={this.state.students}  teams={this.state.teams}/></TabContainer>}
-        {value === 4 && <TabContainer><SimpleTableMentor update={this.update.bind(this)} value={this.state.mentors}  teams={this.state.teams}/></TabContainer>}
-        {value === 5 && <TabContainer><SimpleTableQuestion update={this.update.bind(this)} value={this.state.questions} events={this.state.events}/></TabContainer>}
-        {value === 6 && <TabContainer><SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
-        {value === 7 && <TabContainer><SimpleTableScores update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/></TabContainer>}
+        {value === 0 && <TabContainer>
+          <SimpleTableEvent update={this.update.bind(this)} value={this.state.events} remove={this.removeEvent.bind(this)}/>
+          </TabContainer>}
+        {value === 1 && <TabContainer>
+          <SimpleTableSchool update={this.update.bind(this)} value={this.state.schools} events={this.state.events} remove={this.removeSchool.bind(this)}/>
+          </TabContainer>}
+        {value === 2 && <TabContainer>
+          <SimpleTableTeam update={this.update.bind(this)} value={this.state.teams} schools={this.state.schools} remove={this.removeTeam.bind(this)}/>
+          </TabContainer>}
+        {value === 3 && <TabContainer>
+          <SimpleTableStudent update={this.update.bind(this)} value={this.state.students}  teams={this.state.teams} remove={this.removeStudent.bind(this)}/>
+          </TabContainer>}
+        {value === 4 && <TabContainer>
+          <SimpleTableMentor update={this.update.bind(this)} value={this.state.mentors}  teams={this.state.teams} remove={this.removeMentor.bind(this)}/>
+          </TabContainer>}
+        {value === 5 && <TabContainer>
+          <SimpleTableQuestion update={this.update.bind(this)} value={this.state.questions} events={this.state.events} remove={this.removeQuestion.bind(this)}/>
+          </TabContainer>}
+        {value === 6 && <TabContainer>
+          <SimpleTableJudge update={this.update.bind(this)} value={this.state.judges} events={this.state.events} remove={this.removeJudge.bind(this)}/>
+          </TabContainer>}
+        {value === 7 && <TabContainer>
+          <SimpleTableScores update={this.update.bind(this)} value={this.state.judges} events={this.state.events}/>
+          </TabContainer>}
       </div>
     );
   }

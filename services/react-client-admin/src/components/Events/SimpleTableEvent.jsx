@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import FormDialog from './FormDialog';
+import AlertDialog from '../SimpleDeleteDialog';
 
 const styles = theme => ({
   root: {
@@ -39,6 +40,7 @@ function SimpleTable(props) {
             <TableCell>Judge ID List</TableCell>
             <TableCell>School ID List</TableCell>
             <TableCell >Location</TableCell>
+            <TableCell>Remove</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -52,6 +54,7 @@ function SimpleTable(props) {
                 <TableCell>{event.judge_list.toString()}</TableCell>
                 <TableCell>{event.school_list.toString()}</TableCell>
                 <TableCell >{event.location}</TableCell>
+                <TableCell><AlertDialog remove={props.remove} qid={event.id}/></TableCell>
               </TableRow>
             );
           })}

@@ -1,6 +1,5 @@
-- Show scores
-- Show total score instead of ticks
-- Add remove functionality
+- Add remove 
+- Calculate the winner
 
 - Add ticks for scored or not scored in judge side
 - add login for admin

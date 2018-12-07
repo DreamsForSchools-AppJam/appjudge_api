@@ -4,6 +4,9 @@ from flask import Blueprint, jsonify, request
 from project.api.models.Event import Event
 from project.api.models.Judge import Judge
 from project.api.models.Team import Team
+from project.api.models.School import School
+from project.api.models.Student import Student
+from project.api.models.Mentor import Mentor
 from project.api.models.Question import Question
 from project.api.models.Score import Score
 from project import db
@@ -95,10 +98,33 @@ def remove_event(event_id):
         if not event:
             return jsonify(response_object), 404
         else:
-            # for s in event.school_list:
-            #     school.remove_school(school)
-            # for j in event.judge_list:
-            #     judge.remove_judge(judge)
+            fl = open("logger.txt", "w+")
+            for s in event.school_list:
+                school = School.query.filter_by(id=int(s)).first()
+                if school:
+                    fl.write("{}".format(s))
+                    for t in school.team_list:
+                        team = Team.query.filter_by(id=int(t)).first()
+                        if team:
+                            for st in team.student_list:
+                                student = Student.query.filter_by(id=int(st)).first()
+                                if student:
+                                    db.session.delete(student)
+                            for mt in team.mentor_list:
+                                mentor = Mentor.query.filter_by(id=int(mt)).first()
+                                if mentor:
+                                    db.session.delete(mentor)
+                            db.session.delete(team)
+                    db.session.delete(school)
+            for j in event.judge_list:
+                judge = Judge.query.filter_by(id=int(j)).first()
+                if judge:
+                    db.session.delete(judge)
+            for qu in event.question_list:
+                question = Question.query.filter_by(id=int(qu)).first()
+                if question:
+                    db.session.delete(question)
+            fl.close()
             db.session.delete(event)
             db.session.commit()
             response_object = {

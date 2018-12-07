@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import FormDialog from './FormDialog'
+import AlertDialog from '../SimpleDeleteDialog';
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,7 @@ function SimpleTableQuestion(props) {
             <TableCell numeric>ID</TableCell>
             <TableCell numeric>Max Score</TableCell>
             <TableCell numeric>Event ID</TableCell>
+            <TableCell numeric>Remove</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -49,6 +51,7 @@ function SimpleTableQuestion(props) {
                 <TableCell numeric>{question.id}</TableCell>
                 <TableCell numeric>{question.max_score}</TableCell>
                 <TableCell numeric>{question.event_id}</TableCell>
+                <TableCell numeric><AlertDialog remove={props.remove} qid={question.id}/></TableCell>
               </TableRow>
             );
           })}

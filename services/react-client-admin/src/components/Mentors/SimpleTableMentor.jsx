@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import FormDialog from './FormDialog';
+import AlertDialog from '../SimpleDeleteDialog';
 
 const styles = theme => ({
   root: {
@@ -37,6 +38,7 @@ function SimpleTableMentor(props) {
             <TableCell numeric>ID</TableCell>
             <TableCell>info</TableCell>
             <TableCell>Team ID</TableCell>
+            <TableCell>Remove</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -49,6 +51,7 @@ function SimpleTableMentor(props) {
                 <TableCell numeric>{mentor.id}</TableCell>
                 <TableCell>{mentor.info}</TableCell>
                 <TableCell>{mentor.team_id}</TableCell>
+                <TableCell><AlertDialog remove={props.remove} qid={mentor.id}/></TableCell>
               </TableRow>
             );
           })}

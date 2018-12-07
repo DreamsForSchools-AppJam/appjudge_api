@@ -1,7 +1,10 @@
 # services/appschoolAPI/project/api/routes/school.py
 
 from flask import Blueprint, jsonify, request
+from project.api.models.Team import Team
 from project.api.models.School import School
+from project.api.models.Student import Student
+from project.api.models.Mentor import Mentor
 from project.api.models.Event import Event
 from project import db
 from sqlalchemy import exc
@@ -106,6 +109,18 @@ def remove_school(school_id):
                 temp = event.school_list
                 temp.remove(school.id)
                 event.school_list = temp
+            for t in school.team_list:
+                team = Team.query.filter_by(id=int(t)).first()
+                if team:
+                    for st in team.student_list:
+                        student = Student.query.filter_by(id=int(st)).first()
+                        if student:
+                            db.session.delete(student)
+                    for mt in team.mentor_list:
+                        mentor = Mentor.query.filter_by(id=int(mt)).first()
+                        if mentor:
+                            db.session.delete(mentor)
+                    db.session.delete(team)
             db.session.delete(school)
             db.session.commit()
             response_object = {

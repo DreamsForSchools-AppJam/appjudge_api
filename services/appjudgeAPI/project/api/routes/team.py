@@ -2,6 +2,8 @@
 
 from flask import Blueprint, jsonify, request
 from project.api.models.School import School
+from project.api.models.Student import Student
+from project.api.models.Mentor import Mentor
 from project.api.models.Event import Event
 from project.api.models.Team import Team
 from project import db
@@ -112,6 +114,14 @@ def remove_team(team_id):
                 temp = school.team_list
                 temp.remove(team.id)
                 school.team_list = temp
+            for st in team.student_list:
+                student = Student.query.filter_by(id=int(st)).first()
+                if student:
+                    db.session.delete(student)
+            for mt in team.mentor_list:
+                mentor = Mentor.query.filter_by(id=int(mt)).first()
+                if mentor:
+                    db.session.delete(mentor)
             db.session.delete(team)
             db.session.commit()
             response_object = {

@@ -134,9 +134,14 @@ def remove_judge(judge_id):
         else:
             event = Event.query.filter_by(id=judge.event_id).first()
             if event:
+                # fl = open("logger.txt","w+")
                 temp = event.judge_list
-                temp.remove(judge.id)
+                # fl.write("{}\n".format(temp))
+                temp.remove(int(judge.id))
+                # fl.write("{}\n".format(temp))
                 event.judge_list = temp
+                # fl.write("{}\n".format(event.judge_list))
+                # fl.close()
             db.session.delete(judge)
             db.session.commit()
             response_object = {

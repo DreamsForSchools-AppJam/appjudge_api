@@ -8,9 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import FormDialog from './FormDialog';
-import { Button } from '@material-ui/core';
-import axios from 'axios';
 import FormDialogSmall from './FormDialogSmall';
+import AlertDialog from '../SimpleDeleteDialog';
 
 const styles = theme => ({
   root: {
@@ -51,6 +50,7 @@ function SimpleTableJudge(props) {
             <TableCell>Team ID List</TableCell>
             <TableCell>Username</TableCell>
             <TableCell>Password</TableCell>
+            <TableCell>Remove</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,6 +67,7 @@ function SimpleTableJudge(props) {
                 <TableCell>{judge.team_list.toString()}</TableCell>
                 <TableCell>{judge.username}</TableCell>
                 <TableCell>{judge.password}</TableCell>
+                <TableCell><AlertDialog remove={props.remove} qid={judge.id}/></TableCell>
               </TableRow>
             );
           })}

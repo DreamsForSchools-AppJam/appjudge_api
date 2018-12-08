@@ -61,37 +61,61 @@ class ScrollableTabsButtonForce extends React.Component {
 // User defined
     getJudges(){
         axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/judges`)
-        .then((res) => { this.setState({ judges: res.data.data.judges }); })
+        .then((res) => { 
+          var data = res.data.data.judges
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ judges: data}); 
+         })
         .catch((err) => { console.log(err); });
     }
 
     getTeams(){
         axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/teams`)
-        .then((res) => { this.setState({ teams: res.data.data.teams }); })
+        .then((res) => {
+          var data = res.data.data.teams
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ teams: data}); 
+         })
         .catch((err) => { console.log(err); });
     }
 
     getStudents(){
       axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/students`)
-      .then((res) => { this.setState({ students: res.data.data.students }); })
+      .then((res) => { 
+        var data = res.data.data.students
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ students: data}); 
+      })
       .catch((err) => { console.log(err); });
     }
 
     getMentors(){
       axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/mentors`)
-      .then((res) => { this.setState({ mentors: res.data.data.mentors }); })
+      .then((res) => { 
+        var data = res.data.data.mentors
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ mentors: data}); 
+       })
       .catch((err) => { console.log(err); });
     }
 
     getSchools(){
         axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/schools`)
-        .then((res) => { this.setState({ schools: res.data.data.schools }); })
+        .then((res) => { 
+          var data = res.data.data.schools
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ schools: data}); 
+        })
         .catch((err) => { console.log(err); });
     }
 
     getEvents(){
         axios.get(`${process.env.REACT_APP_APPJUDGE_SERVICE_URL}/events`)
-        .then((res) => { this.setState({ events: res.data.data.events }); })
+        .then((res) => { 
+          var data = res.data.data.events
+          data.sort((a, b) => {return b.id - a.id})
+          this.setState({ events: data}); 
+        })
         .catch((err) => { console.log(err); });
     }
 
